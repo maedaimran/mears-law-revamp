@@ -23,7 +23,7 @@ export default function Hero() {
           playsInline
           className="hero-video"
         >
-          <source src="/Lawyers-Video.mp4" type="video/mp4" />
+          <source src="/Night-City.mp4" type="video/mp4" />
           {/* Fallback for browsers that don't support video */}
           Your browser does not support the video tag.
         </video>

@@ -9,18 +9,17 @@ export default function Home() {
   return (
     <div className="page">
       <Header />
-
-      <main className="main">
-        <section>
+       <section>
           <Hero />
         </section>
+      {/* <main className="main"> */}
         <section>
           <Containers />
         </section>
         <section>
           <PracticeAreasAlt />
         </section>
-      </main>
+      {/* </main> */}
 
       <Footer />
     </div>

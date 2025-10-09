@@ -62,12 +62,12 @@ export default function PracticeAreas() {
                 </div>
               </div>
 
-              <div className="ctaRow">
-                {/* Use legacyBehavior so the class applies to <a> in ALL Next versions */}
-                <Link href={area.cta.href} legacyBehavior>
-                  <a className="ctaBtn">{area.cta.label}</a>
-                </Link>
-              </div>
+             <div className="ctaRow">
+              <Link href={area.cta.href} className="ctaBtn">
+                {area.cta.label}
+              </Link>
+            </div>
+
             </article>
           ))}
         </div>

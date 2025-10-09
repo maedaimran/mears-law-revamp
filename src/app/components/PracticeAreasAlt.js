@@ -5,7 +5,7 @@ import Link from "next/link";
 const AREAS = [
   {
     title: "Government",
-    img: "/images/law1.jpg", // <-- .jpg
+    img: "/images/law1.jpg",
     blurb:
       "Advising public bodies on policy, compliance, modernization, and infrastructure delivery.",
     tags: [
@@ -19,7 +19,7 @@ const AREAS = [
   },
   {
     title: "Corporations",
-    img: "/images/law2.jpg", // <-- .jpg
+    img: "/images/law2.jpg",
     blurb:
       "Practical, growth-minded counsel for compliance, transactions, and risk management.",
     tags: [
@@ -33,7 +33,7 @@ const AREAS = [
   },
   {
     title: "Individuals",
-    img: "/images/law3.jpg", // <-- .jpg
+    img: "/images/law3.jpg",
     blurb:
       "Protecting your rights and helping you navigate high-stakes personal matters.",
     tags: ["Family Law", "Dispute Resolution", "Real Estate", "Immigration"],
@@ -41,106 +41,171 @@ const AREAS = [
   },
 ];
 
+const styles = {
+  section: {
+    background: '#f5efd8',
+  },
+  wrap: {
+    maxWidth: '1240px',
+    margin: '0 auto',
+    padding: 'clamp(48px, 6vw, 96px) clamp(20px, 4vw, 32px)',
+  },
+  eyebrow: {
+    fontSize: '12px',
+    letterSpacing: '.16em',
+    fontWeight: 600,
+    color: '#b91c1c',
+    textTransform: 'uppercase',
+    marginBottom: '16px',
+  },
+  title: {
+    margin: '0 0 16px',
+    fontSize: 'clamp(32px, 4.5vw, 48px)',
+    lineHeight: 1.15,
+    fontWeight: 700,
+    color: '#0a1628',
+  },
+  lede: {
+    margin: '0 0 clamp(40px, 4vw, 56px)',
+    fontSize: 'clamp(17px, 1.8vw, 20px)',
+    lineHeight: 1.65,
+    color: '#374151',
+    maxWidth: '68ch',
+  },
+  grid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gap: 'clamp(24px, 3vw, 40px)',
+  },
+  col: {
+    display: 'flex',
+    flexDirection: 'column',
+    minWidth: 0,
+  },
+  imgWrap: {
+    position: 'relative',
+    width: '100%',
+    aspectRatio: '4 / 3',
+    maxHeight: '260px',
+    borderRadius: '10px',
+    overflow: 'hidden',
+    marginBottom: '18px',
+  },
+  img: {
+    objectFit: 'cover',
+    objectPosition: 'center',
+  },
+  colTitle: {
+    fontSize: 'clamp(20px, 2vw, 22px)',
+    fontWeight: 700,
+    color: '#0a1628',
+    margin: '0 0 10px',
+  },
+  colText: {
+    color: '#374151',
+    margin: '0 0 16px',
+    lineHeight: 1.65,
+  },
+  tags: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '10px',
+    margin: '0 0 18px',
+  },
+  pill: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    padding: '8px 12px',
+    background: '#fff',
+    border: '1px solid #e5e7eb',
+    color: '#1f2937',
+    borderRadius: '999px',
+    fontSize: '13px',
+    fontWeight: 700,
+    lineHeight: 1,
+    boxShadow: '0 1px 2px rgba(0,0,0,.05)',
+  },
+  ctaRow: {
+    marginTop: 'auto',
+  },
+  ctaBtn: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: '#1E3A5F',
+    color: '#fff',
+    textDecoration: 'none',
+    padding: '14px 28px',
+    borderRadius: '8px',
+    fontWeight: 700,
+    fontSize: '15px',
+    transition: 'background .2s ease, transform .1s ease',
+    boxShadow: '0 2px 4px rgba(30, 58, 95, 0.2)',
+    border: 'none',
+  },
+};
+
 export default function PracticeAreas() {
   return (
-    <section className="section" aria-labelledby="focus-areas-title">
-      <div className="wrap">
-        <p className="eyebrow">PRACTICE AREAS</p>
-        <h2 id="focus-areas-title" className="title">What We Focus On</h2>
-        <p className="lede">
-          Clarity about what we do best. If your matter falls outside these areas, we'll help point you in the right direction.
-        </p>
-
-        <div className="grid">
-          {AREAS.map((area) => (
-            <div key={area.title} className="col">
-              {/* Consistent image size */}
-              <div className="imgWrap">
-                <Image
-                  src={area.img}
-                  alt={area.title}
-                  fill
-                  className="img"
-                  sizes="(min-width: 768px) 33vw, 100vw"
-                  priority
-                />
-              </div>
-
-              <h3 className="colTitle">{area.title}</h3>
-              <p className="colText">{area.blurb}</p>
-
-              <div className="tags">
-                {area.tags.map((t) => (
-                  <span key={t} className="pill">{t}</span>
-                ))}
-              </div>
-
-              <div className="ctaRow">
-                <Link href={area.cta.href} className="ctaBtn">
-                  {area.cta.label}
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <style jsx>{`
-        .section {
-          --ink: #0a1628;
-          --body: #374151;
-          --pill-bg: #fff;
-          --pill-brd: #e5e7eb;
-          --pill-txt: #1f2937;
-          --red: #b91c1c;
-          --red-hover: #991b1b;
-          background: #f5efd8;
+    <>
+      <style>{`
+        @media (max-width: 767px) {
+          .practice-grid { grid-template-columns: 1fr !important; }
         }
-        .wrap { max-width: 1240px; margin: 0 auto; padding: clamp(48px, 6vw, 96px) clamp(20px, 4vw, 32px); }
-        .eyebrow { font-size: 12px; letter-spacing: .16em; font-weight: 600; color: var(--red); text-transform: uppercase; margin-bottom: 16px; }
-        .title { margin: 0 0 16px; font-size: clamp(32px, 4.5vw, 48px); line-height: 1.15; font-weight: 700; color: var(--ink); }
-        .lede { margin: 0 0 clamp(40px, 4vw, 56px); font-size: clamp(17px, 1.8vw, 20px); line-height: 1.65; color: var(--body); max-width: 68ch; }
-
-        .grid { display: grid; grid-template-columns: 1fr; gap: clamp(24px, 3vw, 40px); }
-        @media (min-width: 768px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-
-        .col { display: flex; flex-direction: column; min-width: 0; }
-
-        /* Image: equal size, contained */
-        .imgWrap {
-          position: relative;
-          width: 100%;
-          aspect-ratio: 4 / 3;  /* consistent ratio across all */
-          max-height: 260px;    /* prevents giant images */
-          border-radius: 10px;
-          overflow: hidden;
-          margin-bottom: 18px;
+        @media (max-width: 480px) {
+          .practice-cta-btn { width: 100%; }
         }
-        .img { object-fit: cover; object-position: center; }
-
-        .colTitle { font-size: clamp(20px, 2vw, 22px); font-weight: 700; color: var(--ink); margin: 0 0 10px; }
-        .colText { color: var(--body); margin: 0 0 16px; line-height: 1.65; }
-
-        .tags { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 18px; }
-        .pill {
-          display: inline-flex; align-items: center; padding: 8px 12px;
-          background: var(--pill-bg); border: 1px solid var(--pill-brd); color: var(--pill-txt);
-          border-radius: 999px; font-size: 13px; font-weight: 700; line-height: 1;
-          box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        .practice-cta-btn:hover {
+          background: #152a45 !important;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(30, 58, 95, 0.3) !important;
         }
-
-        .ctaRow { margin-top: auto; }
-        .ctaBtn {
-          display: inline-flex; align-items: center; justify-content: center;
-          background: var(--red); color: #fff; text-decoration: none;
-          padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 15px;
-          transition: background .2s ease, transform .1s ease;
+        .practice-cta-btn:active {
+          transform: translateY(0) !important;
+          box-shadow: 0 1px 2px rgba(30, 58, 95, 0.2) !important;
         }
-        .ctaBtn:hover { background: var(--red-hover); transform: translateY(-1px); }
-        .ctaBtn:active { transform: translateY(0); }
-
-        @media (max-width: 480px) { .ctaBtn { width: 100%; } }
       `}</style>
-    </section>
+      <section style={styles.section} aria-labelledby="focus-areas-title">
+        <div style={styles.wrap}>
+          <p style={styles.eyebrow}>PRACTICE AREAS</p>
+          <h2 id="focus-areas-title" style={styles.title}>What We Focus On</h2>
+          <p style={styles.lede}>
+            Clarity about what we do best. If your matter falls outside these areas, we'll help point you in the right direction.
+          </p>
+
+          <div style={styles.grid} className="practice-grid">
+            {AREAS.map((area) => (
+              <div key={area.title} style={styles.col}>
+                <div style={styles.imgWrap}>
+                  <Image
+                    src={area.img}
+                    alt={area.title}
+                    fill
+                    style={styles.img}
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    priority
+                  />
+                </div>
+
+                <h3 style={styles.colTitle}>{area.title}</h3>
+                <p style={styles.colText}>{area.blurb}</p>
+
+                <div style={styles.tags}>
+                  {area.tags.map((t) => (
+                    <span key={t} style={styles.pill}>{t}</span>
+                  ))}
+                </div>
+
+                <div style={styles.ctaRow}>
+                  <Link href={area.cta.href} style={styles.ctaBtn} className="practice-cta-btn">
+                    {area.cta.label} →
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

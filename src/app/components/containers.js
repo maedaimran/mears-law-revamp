@@ -51,6 +51,7 @@ export default function PracticeAreas() {
         <div className="grid">
           {AREAS.map((area) => (
             <article key={area.title} className="card">
+              <div className="cardTopBar" />
               <div className="cardContent">
                 <h3 className="cardTitle">{area.title}</h3>
                 <p className="cardText">{area.blurb}</p>
@@ -63,10 +64,11 @@ export default function PracticeAreas() {
               </div>
 
              <div className="ctaRow">
-              <Link href={area.cta.href} className="ctaBtn">
-                {area.cta.label}
-              </Link>
-            </div>
+            <Link href={area.cta.href} className="ctaBtn" role="button">
+              {area.cta.label}
+            </Link>
+          </div>
+
 
             </article>
           ))}
@@ -140,6 +142,26 @@ export default function PracticeAreas() {
           flex-direction: column;
           overflow: hidden;
         }
+          .cardTopBar {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 4px;
+          width: 0%;
+          background: var(--brand);
+          transition: width 0.3s ease;
+        }
+
+        /* hover effect */
+        .card:hover .cardTopBar {
+          width: 100%;
+        }
+
+        /* click (active) feedback */
+        .card:active .cardTopBar {
+          width: 100%;
+          background: var(--brand-hover);
+        }
         @media (hover: hover) and (pointer: fine) {
           .card:hover { box-shadow: var(--shadow-hover); transform: translateY(-4px); border-color: #d1d5db; }
         }
@@ -171,29 +193,37 @@ export default function PracticeAreas() {
           border-top: 1px solid var(--line);
         }
 
-        /* The actual BUTTON (styled anchor) */
         .ctaBtn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          width: 100%;
-          max-width: 220px;
-          background: var(--brand);
-          color: #fff;
-          text-decoration: none;
-          font-weight: 700;
-          font-size: 16px;
-          line-height: 1;
-          padding: 14px 18px;
-          border-radius: 10px;
-          border: 1px solid transparent;
-          box-shadow: 0 4px 10px rgba(30,58,95,0.18);
-          transition: background .15s ease, box-shadow .15s ease, transform .05s ease;
-          outline: none;
-        }
-        .ctaBtn:hover        { background: var(--brand-hover); box-shadow: 0 6px 14px rgba(30,58,95,0.24); }
-        .ctaBtn:active       { transform: translateY(1px); }
-        .ctaBtn:focus-visible{ box-shadow: 0 0 0 3px rgba(30,58,95,0.32), 0 6px 14px rgba(30,58,95,0.24); }
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--brand);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 1;
+        padding: 12px 20px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s ease, transform 0.1s ease;
+      }
+
+      .ctaBtn:hover {
+        background: var(--brand-hover);
+        transform: translateY(-2px);
+      }
+
+      .ctaBtn:active {
+        transform: translateY(1px);
+      }
+
+      .ctaBtn:focus-visible {
+        outline: 3px solid rgba(30, 58, 95, 0.4);
+        outline-offset: 2px;
+      }
+
 
         /* Mobile: make the button full width so it's obvious */
         @media (max-width: 480px) { .ctaBtn { max-width: none; width: 100%; } }

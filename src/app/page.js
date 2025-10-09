@@ -1,9 +1,11 @@
-import Hero from "./components/hero";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 export default function Home() {
   return (
-    <div>
-      <Hero />
-    </div>
+    <>
+      <Header />
+      <Footer />
+    </>
   );
 }

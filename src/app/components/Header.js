@@ -5,10 +5,10 @@ export default function Header() {
     <>
       <header className="site-header">
         <div className="container nav">
-          <a className="brand" href="/" aria-label="Mears Law home">
-            <img src="images/mears-logo.png" alt="Mears Law logo" className="brand-mark-img" />
-            <div className="brand-name">Mears Law</div>
-          </a>
+<a className="brand" href="/" aria-label="Mears Law home">
+  <img src="/images/mears-logo.png" alt="Mears Law logo" className="brand-mark-img" />
+  <div className="brand-name">Mears Law</div>
+</a>
 
           <nav className="nav-links" aria-label="Primary">
             <a href="#home">Home</a>

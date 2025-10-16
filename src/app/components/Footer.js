@@ -29,7 +29,7 @@ export default function Footer() {
           {/* Brand + blurb */}
           <div>
             <div className="brand">
-              <img src="images/mears-logo.png" alt="Mears Law logo" className="brand-mark-img" />
+              <img src="/images/mears-logo.png" alt="Mears Law logo" className="brand-mark-img" />
               <div className="brand-name">Mears Law</div>
             </div>
             <p className="mini">

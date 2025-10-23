@@ -1,0 +1,173 @@
+.practiceSection {
+  background: #FFFFFF;
+  padding: clamp(60px, 8vw, 100px) 0;
+}
+
+.practiceContainer {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 60px);
+}
+
+.practiceHeader {
+  margin-bottom: clamp(40px, 6vw, 60px);
+}
+
+.practiceEyebrow {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: #260e69;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.practiceTitle {
+  margin: 0;
+  font-size: clamp(32px, 4.5vw, 48px);
+  line-height: 1.15;
+  font-weight: 700;
+  color: #0A1628;
+  letter-spacing: -0.02em;
+}
+
+.practiceDivider {
+  height: 3px;
+  background: linear-gradient(90deg, #260e69 0%, #260e69 40%, transparent 40%);
+  margin-bottom: clamp(36px, 5vw, 52px);
+  border-radius: 2px;
+}
+
+.practiceList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.practiceItem {
+  border-bottom: 1px solid #E5E7EB;
+  transition: border-color 0.3s ease;
+}
+
+.practiceItem:hover {
+  border-color: #260e69;
+}
+
+.practiceItem:last-child {
+  border-bottom: none;
+}
+
+.practiceLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(20px, 3vw, 32px) clamp(8px, 1.5vw, 16px);
+  text-decoration: none;
+  color: #260e69;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  gap: 20px;
+  cursor: pointer;
+}
+
+.practiceLink:hover {
+  padding-left: clamp(16px, 2.5vw, 32px);
+  background: linear-gradient(90deg, #faf8ff 0%, transparent 100%);
+}
+
+.practiceText {
+  font-size: clamp(20px, 2.5vw, 32px);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.practiceArrowContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(40px, 5vw, 60px);
+  height: clamp(40px, 5vw, 60px);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.practiceArrow {
+  font-size: clamp(24px, 3vw, 40px);
+  color: #260e69;
+  font-weight: 300;
+  line-height: 1;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: rotate(0deg);
+  display: inline-block;
+}
+
+.practiceLink:hover .practiceArrow {
+  transform: rotate(-45deg) scale(1.15);
+}
+
+@media (max-width: 1024px) {
+  .practiceText {
+    font-size: clamp(18px, 3vw, 28px);
+  }
+  
+  .practiceArrow {
+    font-size: clamp(22px, 3.5vw, 36px);
+  }
+}
+
+@media (max-width: 768px) {
+  .practiceLink {
+    gap: 16px;
+    padding: clamp(18px, 4vw, 28px) clamp(8px, 2vw, 12px);
+  }
+  
+  .practiceText {
+    font-size: clamp(18px, 4vw, 24px);
+  }
+  
+  .practiceArrow {
+    font-size: clamp(20px, 5vw, 32px);
+  }
+  
+  .practiceArrowContainer {
+    width: clamp(36px, 8vw, 48px);
+    height: clamp(36px, 8vw, 48px);
+  }
+}
+
+@media (max-width: 480px) {
+  .practiceLink {
+    padding: clamp(16px, 5vw, 24px) 8px;
+  }
+  
+  .practiceText {
+    font-size: clamp(16px, 4.5vw, 22px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .practiceLink,
+  .practiceArrow,
+  .practiceText,
+  .practiceItem {
+    transition: none !important;
+  }
+  
+  .practiceLink:hover .practiceArrow {
+    transform: rotate(-45deg);
+  }
+}
+
+.practiceLink:focus-visible {
+  outline: 3px solid rgba(38, 14, 105, 0.3);
+  outline-offset: 3px;
+  background: linear-gradient(90deg, #faf8ff 0%, transparent 100%);
+}
+
+.practiceLink:focus-visible .practiceArrow {
+  transform: rotate(-45deg) scale(1.15);
+}

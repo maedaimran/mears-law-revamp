@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 
 export default function Header() {
   return (
@@ -14,12 +15,12 @@ export default function Header() {
           </a>
 
           <nav className="nav-links" aria-label="Primary">
-            <a href="#home">Home</a>
-            <a href="/about">About</a>
-            <a href="#practice-areas">Practice Areas</a>
+            <a href="/">Home</a>
+            <a href="#about">About</a>
+            <a href="/services">Practice Areas</a>
             <a href="#careers">Careers</a>
             <a href="#insights">Insights</a>
-            <a href="#contact">Contact</a>
+            <a href="/contact">Contact</a>
           </nav>
 
           <div className="cta">

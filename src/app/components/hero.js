@@ -1,15 +1,25 @@
 'use client';
 
 import { useState } from 'react';
+import AISearchResults from './AISearchResults';
 import './hero.css';
 
 export default function Hero() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [showResults, setShowResults] = useState(false);
+  const [currentQuery, setCurrentQuery] = useState('');
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // TODO: Implement AI search functionality
-    console.log('Search query:', searchQuery);
+    if (searchQuery.trim()) {
+      setCurrentQuery(searchQuery.trim());
+      setShowResults(true);
+    }
+  };
+
+  const handleCloseResults = () => {
+    setShowResults(false);
+    setCurrentQuery('');
   };
 
   return (
@@ -73,6 +83,16 @@ export default function Hero() {
         </div>
       </div>
 
+      {/* AI Search Results Modal */}
+      {showResults && (
+        <>
+          <div className="modal-backdrop" onClick={handleCloseResults}></div>
+          <AISearchResults 
+            query={currentQuery} 
+            onClose={handleCloseResults} 
+          />
+        </>
+      )}
     </div>
   );
 }

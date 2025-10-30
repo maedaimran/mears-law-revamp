@@ -21,7 +21,7 @@ export default function Header() {
 
           <nav className="nav-links" aria-label="Primary">
             <a href="/">Home</a>
-            <a href="#about">About</a>
+            <a href="/about">About</a>
             <a href="/services">Practice Areas</a>
             <a href="#careers">Careers</a>
             <a href="#insights">Insights</a>

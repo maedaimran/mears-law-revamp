@@ -49,7 +49,7 @@
 
 .hero-title {
   font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  font-size: 1.85rem; /* much smaller */
+  font-size: 30px; /* much smaller */
   font-weight: 800;
   margin: 6px 0 10px; /* tighter spacing */
   line-height: 1.1;   /* tighter line height */

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { azureAIService } from '../../lib/azureAIService.js';
+import { geminiAIService } from '../../lib/geminiAIService.js';
 
 export async function POST(request) {
   try {
@@ -12,8 +12,8 @@ export async function POST(request) {
       );
     }
 
-    // Process the query with Azure AI service
-    const result = await azureAIService.processQuery(query.trim());
+    // Process the query with Gemini AI service
+    const result = await geminiAIService.processQuery(query.trim());
 
     return NextResponse.json({
       success: true,
@@ -50,6 +50,6 @@ export async function GET() {
   return NextResponse.json({
     message: 'AI Search API is running',
     status: 'healthy',
-    azureConfigured: azureAIService.isConfigured()
+    geminiConfigured: geminiAIService.isConfigured()
   });
 }

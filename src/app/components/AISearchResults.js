@@ -1,22 +1,33 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 export default function AISearchResults({ query, onClose }) {
-  const [result, setResult] = useState(null);
+  const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [inputQuery, setInputQuery] = useState('');
+  const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);
+  const hasInitialized = useRef(false);
 
-  useEffect(() => {
-    if (query && query.trim()) {
-      searchAI(query);
-    }
-  }, [query]);
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
-  const searchAI = async (searchQuery) => {
+  const handleSearch = useCallback(async (searchQuery) => {
+    if (!searchQuery.trim()) return;
+
+    const userMessage = {
+      type: 'user',
+      content: searchQuery.trim(),
+      timestamp: new Date()
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setInputQuery('');
     setLoading(true);
     setError(null);
-    setResult(null);
 
     try {
       const response = await fetch('/api/ai-search', {
@@ -30,245 +41,50 @@ export default function AISearchResults({ query, onClose }) {
       const data = await response.json();
 
       if (data.success) {
-        setResult(data.data);
+        const aiMessage = {
+          type: 'ai',
+          content: data.data.answer,
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, aiMessage]);
       } else {
         setError(data.error || 'Failed to get AI response');
-        setResult(data.data); // Still show the fallback response
+        const errorMessage = {
+          type: 'ai',
+          content: data.data?.answer || 'I apologize, but I encountered an error. Please try again.',
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, errorMessage]);
       }
     } catch (err) {
       console.error('Search error:', err);
       setError('Network error. Please try again.');
+      const errorMessage = {
+        type: 'ai',
+        content: 'I apologize, but I encountered a network error. Please try again.',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorMessage]);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const getConfidenceColor = (confidence) => {
-    switch (confidence) {
-      case 'high': return '#10B981'; // green
-      case 'medium': return '#F59E0B'; // yellow
-      case 'low': return '#EF4444'; // red
-      default: return '#6B7280'; // gray
+  useEffect(() => {
+    if (query && query.trim() && !hasInitialized.current) {
+      hasInitialized.current = true;
+      handleSearch(query);
     }
+  }, [query, handleSearch]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSearch(inputQuery);
   };
-
-  const getConfidenceText = (confidence) => {
-    switch (confidence) {
-      case 'high': return 'High Confidence';
-      case 'medium': return 'Medium Confidence';
-      case 'low': return 'Low Confidence';
-      default: return 'Unknown';
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="search-results">
-        <div className="search-results-header">
-          <h3>AI Assistant</h3>
-          <button onClick={onClose} className="close-btn" aria-label="Close results">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-        </div>
-        <div className="loading-container">
-          <div className="loading-spinner"></div>
-          <p>Thinking...</p>
-        </div>
-        <style jsx>{`
-          .search-results {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            z-index: 1000;
-          }
-          
-          .search-results-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 24px;
-            border-bottom: 1px solid #E5E7EB;
-          }
-          
-          .search-results-header h3 {
-            margin: 0;
-            font-size: 18px;
-            font-weight: 600;
-            color: #111827;
-          }
-          
-          .close-btn {
-            background: none;
-            border: none;
-            padding: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            color: #6B7280;
-            transition: all 0.2s ease;
-          }
-          
-          .close-btn:hover {
-            background: #F3F4F6;
-            color: #374151;
-          }
-          
-          .loading-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 24px;
-            text-align: center;
-          }
-          
-          .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid #E5E7EB;
-            border-top: 3px solid #3B82F6;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 16px;
-          }
-          
-          @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-          
-          .loading-container p {
-            margin: 0;
-            color: #6B7280;
-            font-size: 14px;
-          }
-        `}</style>
-      </div>
-    );
-  }
-
-  if (error && !result) {
-    return (
-      <div className="search-results">
-        <div className="search-results-header">
-          <h3>AI Assistant</h3>
-          <button onClick={onClose} className="close-btn" aria-label="Close results">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
-          </button>
-        </div>
-        <div className="error-container">
-          <div className="error-icon">⚠️</div>
-          <h4>Something went wrong</h4>
-          <p>{error}</p>
-          <button onClick={() => searchAI(query)} className="retry-btn">
-            Try Again
-          </button>
-        </div>
-        <style jsx>{`
-          .search-results {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            z-index: 1000;
-          }
-          
-          .search-results-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 24px;
-            border-bottom: 1px solid #E5E7EB;
-          }
-          
-          .search-results-header h3 {
-            margin: 0;
-            font-size: 18px;
-            font-weight: 600;
-            color: #111827;
-          }
-          
-          .close-btn {
-            background: none;
-            border: none;
-            padding: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            color: #6B7280;
-            transition: all 0.2s ease;
-          }
-          
-          .close-btn:hover {
-            background: #F3F4F6;
-            color: #374151;
-          }
-          
-          .error-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 24px;
-            text-align: center;
-          }
-          
-          .error-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-          }
-          
-          .error-container h4 {
-            margin: 0 0 8px 0;
-            color: #111827;
-            font-size: 18px;
-          }
-          
-          .error-container p {
-            margin: 0 0 24px 0;
-            color: #6B7280;
-            font-size: 14px;
-          }
-          
-          .retry-btn {
-            background: #3B82F6;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s ease;
-          }
-          
-          .retry-btn:hover {
-            background: #2563EB;
-          }
-        `}</style>
-      </div>
-    );
-  }
-
-  if (!result) return null;
 
   return (
     <div className="search-results">
@@ -282,36 +98,59 @@ export default function AISearchResults({ query, onClose }) {
         </button>
       </div>
       
-      <div className="search-results-content">
-        <div className="query-section">
-          <div className="query-label">Your Question:</div>
-          <div className="query-text">"{result.query}"</div>
+      <div className="chat-container">
+        <div className="messages-container">
+          {messages.length === 0 && (
+            <div className="welcome-message">
+              <p>Hi! I'm here to help with questions about Mears Law. Ask me anything!</p>
+            </div>
+          )}
+          
+          {messages.map((message, index) => (
+            <div key={index} className={`message ${message.type}`}>
+              <div className="message-content">
+                {message.content.split('\n').map((line, i) => (
+                  <span key={i}>
+                    {line}
+                    {i < message.content.split('\n').length - 1 && <br />}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+          
+          {loading && (
+            <div className="message ai loading">
+              <div className="message-content">
+                <div className="typing-indicator">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          )}
+          
+          <div ref={messagesEndRef} />
         </div>
         
-        <div className="answer-section">
-          <div className="answer-label">Answer:</div>
-          <div className="answer-text">{result.answer}</div>
-        </div>
-        
-        <div className="metadata-section">
-          <div className="confidence-badge" style={{ backgroundColor: getConfidenceColor(result.confidence) }}>
-            {getConfidenceText(result.confidence)}
-          </div>
-          <div className="source-info">
-            Source: {result.source === 'training_data' ? 'Knowledge Base' : 
-                   result.source === 'azure_ai' ? 'AI Generated' : 
-                   result.source === 'fallback' ? 'General Response' : 'Unknown'}
-          </div>
-        </div>
-        
-        <div className="action-buttons">
-          <a href="https://mearslaw.ca" target="_blank" rel="noopener noreferrer" className="action-btn primary">
-            Visit Website
-          </a>
-          <a href="#book" className="action-btn secondary">
-            Book Consultation
-          </a>
-        </div>
+        <form onSubmit={handleSubmit} className="chat-input-form">
+          <input
+            ref={inputRef}
+            type="text"
+            value={inputQuery}
+            onChange={(e) => setInputQuery(e.target.value)}
+            placeholder="Type your question here..."
+            disabled={loading}
+            className="chat-input"
+          />
+          <button type="submit" disabled={loading || !inputQuery.trim()} className="send-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </form>
       </div>
       
       <style jsx>{`
@@ -325,9 +164,11 @@ export default function AISearchResults({ query, onClose }) {
           box-shadow: 0 20px 40px rgba(0,0,0,0.15);
           max-width: 600px;
           width: 90%;
-          max-height: 80vh;
-          overflow-y: auto;
+          height: 80vh;
+          display: flex;
+          flex-direction: column;
           z-index: 1000;
+          overflow: hidden;
         }
         
         .search-results-header {
@@ -336,6 +177,7 @@ export default function AISearchResults({ query, onClose }) {
           align-items: center;
           padding: 20px 24px;
           border-bottom: 1px solid #E5E7EB;
+          flex-shrink: 0;
         }
         
         .search-results-header h3 {
@@ -360,110 +202,180 @@ export default function AISearchResults({ query, onClose }) {
           color: #374151;
         }
         
-        .search-results-content {
-          padding: 24px;
+        .chat-container {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          overflow: hidden;
         }
         
-        .query-section, .answer-section {
-          margin-bottom: 20px;
+        .messages-container {
+          flex: 1;
+          overflow-y: auto;
+          padding: 20px 24px;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
         }
         
-        .query-label, .answer-label {
-          font-size: 12px;
-          font-weight: 600;
+        .welcome-message {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 40px 20px;
+          text-align: center;
+        }
+        
+        .welcome-message p {
           color: #6B7280;
-          text-transform: uppercase;
-          letter-spacing: 0.5px;
-          margin-bottom: 8px;
-        }
-        
-        .query-text {
-          background: #F9FAFB;
-          padding: 12px 16px;
-          border-radius: 8px;
-          border-left: 4px solid #3B82F6;
-          font-style: italic;
-          color: #374151;
-        }
-        
-        .answer-text {
+          font-size: 15px;
           line-height: 1.6;
-          color: #111827;
+        }
+        
+        .message {
+          display: flex;
+          max-width: 80%;
+          animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .message.user {
+          align-self: flex-end;
+          margin-left: auto;
+        }
+        
+        .message.ai {
+          align-self: flex-start;
+          margin-right: auto;
+        }
+        
+        .message-content {
+          padding: 12px 16px;
+          border-radius: 12px;
+          line-height: 1.6;
           font-size: 15px;
         }
         
-        .metadata-section {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 24px;
-          padding-top: 16px;
-          border-top: 1px solid #E5E7EB;
-        }
-        
-        .confidence-badge {
-          color: white;
-          padding: 4px 12px;
-          border-radius: 20px;
-          font-size: 12px;
-          font-weight: 600;
-        }
-        
-        .source-info {
-          font-size: 12px;
-          color: #6B7280;
-        }
-        
-        .action-buttons {
-          display: flex;
-          gap: 12px;
-          justify-content: center;
-        }
-        
-        .action-btn {
-          padding: 12px 24px;
-          border-radius: 8px;
-          text-decoration: none;
-          font-weight: 600;
-          font-size: 14px;
-          transition: all 0.2s ease;
-          text-align: center;
-          min-width: 140px;
-        }
-        
-        .action-btn.primary {
+        .message.user .message-content {
           background: #3B82F6;
           color: white;
+          border-bottom-right-radius: 4px;
         }
         
-        .action-btn.primary:hover {
+        .message.ai .message-content {
+          background: #F3F4F6;
+          color: #111827;
+          border-bottom-left-radius: 4px;
+        }
+        
+        .typing-indicator {
+          display: flex;
+          gap: 6px;
+          padding: 8px 0;
+        }
+        
+        .typing-indicator span {
+          width: 8px;
+          height: 8px;
+          background: #9CA3AF;
+          border-radius: 50%;
+          animation: typing 1.4s infinite ease-in-out;
+        }
+        
+        .typing-indicator span:nth-child(1) {
+          animation-delay: 0s;
+        }
+        
+        .typing-indicator span:nth-child(2) {
+          animation-delay: 0.2s;
+        }
+        
+        .typing-indicator span:nth-child(3) {
+          animation-delay: 0.4s;
+        }
+        
+        @keyframes typing {
+          0%, 60%, 100% {
+            transform: translateY(0);
+            opacity: 0.7;
+          }
+          30% {
+            transform: translateY(-10px);
+            opacity: 1;
+          }
+        }
+        
+        .chat-input-form {
+          display: flex;
+          gap: 8px;
+          padding: 16px 20px;
+          border-top: 1px solid #E5E7EB;
+          background: white;
+          flex-shrink: 0;
+        }
+        
+        .chat-input {
+          flex: 1;
+          padding: 12px 16px;
+          border: 1px solid #D1D5DB;
+          border-radius: 12px;
+          font-size: 15px;
+          outline: none;
+          transition: all 0.2s ease;
+        }
+        
+        .chat-input:focus {
+          border-color: #3B82F6;
+          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .chat-input:disabled {
+          background: #F9FAFB;
+          cursor: not-allowed;
+        }
+        
+        .send-btn {
+          background: #3B82F6;
+          color: white;
+          border: none;
+          padding: 12px 20px;
+          border-radius: 12px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s ease;
+        }
+        
+        .send-btn:hover:not(:disabled) {
           background: #2563EB;
           transform: translateY(-1px);
         }
         
-        .action-btn.secondary {
-          background: #F3F4F6;
-          color: #374151;
-          border: 1px solid #D1D5DB;
-        }
-        
-        .action-btn.secondary:hover {
-          background: #E5E7EB;
-          transform: translateY(-1px);
+        .send-btn:disabled {
+          background: #D1D5DB;
+          cursor: not-allowed;
+          transform: none;
         }
         
         @media (max-width: 640px) {
           .search-results {
             width: 95%;
-            max-height: 90vh;
+            height: 90vh;
           }
           
-          .action-buttons {
-            flex-direction: column;
-          }
-          
-          .action-btn {
-            min-width: auto;
+          .message {
+            max-width: 85%;
           }
         }
       `}</style>

@@ -1,25 +1,23 @@
-import { OpenAIClient } from '@azure/openai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { mearsLawTrainingData, findBestAnswer } from './trainingData.js';
 
-class AzureAIService {
+class GeminiAIService {
   constructor() {
     this.client = null;
-    this.endpoint = process.env.AZURE_OPENAI_ENDPOINT;
-    this.apiKey = process.env.AZURE_OPENAI_API_KEY;
-    this.deploymentName = process.env.AZURE_OPENAI_DEPLOYMENT_NAME;
-    this.model = process.env.AZURE_OPENAI_MODEL || 'gpt-4';
+    this.apiKey = process.env.GEMINI_API_KEY;
+    this.model = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
     
-    if (this.endpoint && this.apiKey && this.deploymentName) {
-      this.client = new OpenAIClient(this.endpoint, this.apiKey);
+    if (this.apiKey) {
+      this.client = new GoogleGenerativeAI(this.apiKey);
     }
   }
 
-  // Check if Azure AI is properly configured
+  // Check if Gemini AI is properly configured
   isConfigured() {
-    return !!(this.client && this.endpoint && this.apiKey && this.deploymentName);
+    return !!(this.client && this.apiKey);
   }
 
-  // Process user query with Azure AI
+  // Process user query with Gemini AI
   async processQuery(userQuery) {
     try {
       // First, try to find a direct match in our training data
@@ -36,11 +34,11 @@ class AzureAIService {
         };
       }
 
-      // If no good match, use Azure AI to generate a response
+      // If no good match, use Gemini AI to generate a response
       if (this.isConfigured()) {
         return await this.generateAIResponse(userQuery);
       } else {
-        // Fallback to basic response if Azure AI is not configured
+        // Fallback to basic response if Gemini AI is not configured
         return {
           answer: "I'm sorry, I don't have specific information about that. Please contact us directly at mearslaw.ca or book a consultation to speak with one of our lawyers.",
           confidence: 'low',
@@ -64,23 +62,17 @@ class AzureAIService {
     }
 
     try {
-      const messages = [
-        {
-          role: 'system',
-          content: mearsLawTrainingData.systemPrompt
-        },
-        {
-          role: 'user',
-          content: `User asked: "${userQuery}"\n\nBased on this training data: "${trainingMatch.answer}"\n\nPlease provide a helpful, professional response that directly answers their question while maintaining the accuracy of the training data.`
-        }
-      ];
+      const model = this.client.getGenerativeModel({ model: this.model });
+      
+      const prompt = `${mearsLawTrainingData.systemPrompt}\n\nUser asked: "${userQuery}"\n\nBased on this training data: "${trainingMatch.answer}"\n\nPlease provide a helpful, professional response that directly answers their question while maintaining the accuracy of the training data. 
 
-      const response = await this.client.getChatCompletions(this.deploymentName, messages, {
-        maxTokens: 500,
-        temperature: 0.7
-      });
+FORMATTING INSTRUCTIONS: Use line breaks to create readable paragraphs. Separate different ideas with blank lines. Do not use markdown formatting such as **bold**, *italics*, # headers, or - bullet points. Use plain text with natural line breaks only.`;
 
-      return response.choices[0].message.content;
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();
+
+      return text;
     } catch (error) {
       console.error('Error enhancing response:', error);
       return trainingMatch.answer; // Fallback to original answer
@@ -90,26 +82,20 @@ class AzureAIService {
   // Generate AI response for queries not in training data
   async generateAIResponse(userQuery) {
     try {
-      const messages = [
-        {
-          role: 'system',
-          content: mearsLawTrainingData.systemPrompt
-        },
-        {
-          role: 'user',
-          content: userQuery
-        }
-      ];
+      const model = this.client.getGenerativeModel({ model: this.model });
+      
+      const prompt = `${mearsLawTrainingData.systemPrompt}\n\nUser question: ${userQuery}
 
-      const response = await this.client.getChatCompletions(this.deploymentName, messages, {
-        maxTokens: 500,
-        temperature: 0.7
-      });
+FORMATTING INSTRUCTIONS: Use line breaks to create readable paragraphs. Separate different ideas with blank lines. Do not use markdown formatting such as **bold**, *italics*, # headers, or - bullet points. Use plain text with natural line breaks only.`;
+
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();
 
       return {
-        answer: response.choices[0].message.content,
+        answer: text,
         confidence: 'medium',
-        source: 'azure_ai'
+        source: 'gemini_ai'
       };
     } catch (error) {
       console.error('Error generating AI response:', error);
@@ -153,5 +139,5 @@ class AzureAIService {
 }
 
 // Export singleton instance
-export const azureAIService = new AzureAIService();
-export default azureAIService;
+export const geminiAIService = new GeminiAIService();
+export default geminiAIService;

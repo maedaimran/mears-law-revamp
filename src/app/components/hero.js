@@ -23,8 +23,9 @@ export default function Hero() {
   };
 
   return (
-    <div className="hero-container">
-      {/* Video Background */}
+    <>
+      <div className="hero-container">
+        {/* Video Background */}
       <div className="video-background">
         <video
           autoPlay
@@ -40,19 +41,13 @@ export default function Hero() {
         {/* Video Overlay */}
         <div className="video-overlay"></div>
       </div>
-
-      {/* Hero Content */}
-      <div className="hero-content">
+      </div>
+      {/* Below-video Content (outside of hero container so it sits under the video) */}
+      <div className="below-hero">
         <div className="hero-text">
-          <h1 className="hero-title">
-            Mears Law
-          </h1>
-          <p className="hero-subtitle">
-            Get help with all of your questions
-          </p>
+          <h1 className="hero-title">Focused Expertise, Proven</h1>
         </div>
 
-        {/* Search Bar */}
         <div className="search-container">
           <form onSubmit={handleSearch} className="search-form">
             <div className="search-input-wrapper">
@@ -60,7 +55,7 @@ export default function Hero() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Ask your legal question..."
+                placeholder="How can we help you"
                 className="search-input"
               />
               <button type="submit" className="search-button">
@@ -93,6 +88,6 @@ export default function Hero() {
           />
         </>
       )}
-    </div>
+    </>
   );
 }

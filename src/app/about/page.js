@@ -1,13 +1,9 @@
 // src/app/about/page.js
 "use client";
 
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-
 export default function AboutPage() {
   return (
     <>
-      <Header />
 
       {/* ===== Hero ===== */}
       <section className="about-hero">
@@ -102,38 +98,67 @@ export default function AboutPage() {
         <div className="container">
           <h2>Our Commitment</h2>
           <p className="sub">
-            At Mears Law, we measure our success by the trust and satisfaction of our clients. We
-            pride ourselves on:
+            At Mears Law, we measure success by the trust and confidence our clients place in us. We are committed to delivering legal services that reflect our core principles:
+          </p>
+
+          <div className="pill-grid">
+            <div className="pill">
+              <h4>Excellence</h4>
+              <p>We provide precise, insightful, and efficient legal solutions tailored to each client's needs.</p>
+            </div>
+            <div className="pill">
+              <h4>Collaboration</h4>
+              <p>We work closely with our clients to understand their goals and craft strategies that support their success.</p>
+            </div>
+            <div className="pill">
+              <h4>Innovation</h4>
+              <p>We embrace technology, including AI and digital legal tools, to enhance service quality, accessibility, and efficiency.</p>
+            </div>
+          </div>
+
+          <p className="note">
+            Our commitment is to be more than legal advisors—we strive to be trusted partners in every step of your journey.
+          </p>
+        </div>
+      </section>
+
+      {/* ===== Values ===== */}
+      <section className="values">
+        <div className="container">
+          <h2>Our Values</h2>
+          <p className="sub">
+            At Mears Law, we provide comprehensive legal services tailored to the needs of corporations, government entities, and individuals. Our team combines legal insight with practical solutions to help clients navigate complex challenges with confidence.
+          </p>
+          <p className="sub">
+            We are guided by core values that define our approach:
           </p>
 
           <div className="pill-grid">
             <div className="pill">
               <h4>Integrity</h4>
-              <p>Upholding the highest ethical and professional standards in all our work.</p>
+              <p>Upholding the highest ethical standards in every matter.</p>
             </div>
             <div className="pill">
-              <h4>Excellence</h4>
-              <p>Delivering legal services with precision, insight, and efficiency.</p>
+              <h4>Clarity</h4>
+              <p>Communicating with transparency and precision.</p>
             </div>
             <div className="pill">
-              <h4>Collaboration</h4>
-              <p>Working closely with clients to understand goals and tailor solutions.</p>
+              <h4>Strategic Insight</h4>
+              <p>Aligning legal advice with real-world goals.</p>
             </div>
             <div className="pill">
-              <h4>Innovation</h4>
-              <p>Using technology, including AI and digital tools, to enhance quality and access.</p>
+              <h4>Confidentiality</h4>
+              <p>Protecting client information with diligence and care.</p>
             </div>
             <div className="pill">
-              <h4>Community</h4>
-              <p>Giving back through pro bono work, education, and mentorship.</p>
+              <h4>Responsiveness</h4>
+              <p>Delivering timely, attentive service.</p>
+            </div>
+            <div className="pill">
+              <h4>Adaptability</h4>
+              <p>Evolving with the legal and technological landscape.</p>
             </div>
           </div>
-
-          <p className="note">
-            Whether advising a multinational corporation, assisting a public agency, or representing
-            an individual, our team is dedicated to protecting our clients’ interests and achieving
-            their objectives.
-          </p>
         </div>
       </section>
 
@@ -142,16 +167,24 @@ export default function AboutPage() {
         <div className="container">
           <h2>Our Team</h2>
           <div className="person">
-            <div className="avatar">CM</div>
             <div className="meta">
               <div className="name">Carissa Mears</div>
               <div className="role">Lawyer • Lead Consultant &amp; Founder</div>
+              <div className="bio">
+                <p>
+                  Carissa Mears is the founder of Mears Law. With nearly a decade of legal experience across Ontario, Jamaica, and Trinidad &amp; Tobago, Carissa brings a global perspective and deep cross-border expertise to her practice. Her career spans impactful roles in both the public and private sectors, including leadership positions at TELUS and the Center for AI and Digital Policy, where she has shaped policy and governance frameworks for emerging technologies. She has also contributed to major transactions and data breach matters as a legal consultant at Deloitte, and served as legal counsel to organizations such Medic Alert and as a privacy consultant at CIBC.
+                </p>
+                <p>
+                  Carissa is a recognized thought leader in AI and privacy law, frequently invited to speak at industry conferences alongside experts from Google, EY, and leading law firms. Her work has been cited by policymakers and featured in global initiatives, including contributions to the Artificial Intelligence and Democratic Values Index and policy submissions to the United Nations and European Union.
+                </p>
+                <p>
+                  At Mears Law, Carissa manages a practice committed to excellence, integrity, and innovation. She works closely with clients—from individuals navigating real estate and immigration matters to businesses and government entities facing complex regulatory and commercial challenges. Her approach is grounded in collaboration, clarity, and a deep understanding of both legal frameworks and client goals—making her a trusted advisor in today’s evolving legal landscape.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
-
-      <Footer />
 
       <style jsx>{`
         :global(html) {
@@ -176,6 +209,11 @@ export default function AboutPage() {
           border-top: 1px solid #e5e7eb;
           border-bottom: 1px solid #e5e7eb;
         }
+        .values {
+          padding: 64px 0;
+          background: #ffffff;
+          border-bottom: 1px solid #e5e7eb;
+        }
         .team {
           padding: 56px 0 72px;
         }
@@ -188,27 +226,27 @@ export default function AboutPage() {
           margin-bottom: 8px;
         }
         h1 {
-          font-family: "DM Serif Display", serif;
+          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
           font-size: clamp(28px, 4vw, 42px);
           line-height: 1.15;
           color: #0a1628;
           margin: 0 0 10px;
         }
         h2 {
-          font-family: "DM Serif Display", serif;
+          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
           font-size: clamp(22px, 3.2vw, 32px);
           line-height: 1.2;
           color: #0a1628;
           margin: 0 0 18px;
         }
         h3 {
-          font-family: "DM Serif Display", serif;
+          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
           font-size: 20px;
           margin: 0;
           color: #0a1628;
         }
         h4 {
-          font-family: "DM Serif Display", serif;
+          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
           font-size: 18px;
           margin: 0 0 6px;
           color: #0a1628;
@@ -316,9 +354,17 @@ export default function AboutPage() {
           margin: 4px 0 26px;
           max-width: none;             /* allow full width */
         }
+        .values .sub {
+          text-align: left;
+          margin: 4px 0 26px;
+          max-width: none;
+        }
+        .values .sub + .sub {
+          margin: 0 0 32px;            /* extra space before the grid */
+        }
         .pill-grid {
           display: grid;
-          grid-template-columns: repeat(5, 1fr);
+          grid-template-columns: repeat(3, 1fr);
           gap: 18px;
         }
         .pill {
@@ -346,14 +392,14 @@ export default function AboutPage() {
         /* Team */
         .person {
           display: flex;
-          align-items: center;
-          gap: 14px;
+          align-items: flex-start;
+          gap: 16px;
           background: #ffffff;
           border: 1px solid #e5e7eb;
           border-radius: 14px;
-          padding: 14px 16px;
+          padding: 18px 20px;
           box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-          max-width: 720px;
+          width: 100%;
         }
         .avatar {
           width: 40px;
@@ -367,17 +413,28 @@ export default function AboutPage() {
           border: 1px solid rgba(0, 0, 0, 0.06);
         }
         .name {
-          font: 700 16px/1.35 Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+          font: 800 18px/1.35 Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
           color: #0a1628;
         }
         .role {
-          font: 500 14px/1.5 Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+          font: 600 14px/1.5 Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
           color: #6b7280;
+          margin-bottom: 8px;
+        }
+
+        .bio p {
+          margin: 10px 0 0;
+          font: 400 15.5px/1.8 Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+          color: #334155;
+        }
+
+        @media (max-width: 700px) {
+          .person { flex-direction: column; align-items: stretch; }
         }
 
         @media (max-width: 1100px) {
           .pill-grid {
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
           }
         }
         @media (max-width: 900px) {

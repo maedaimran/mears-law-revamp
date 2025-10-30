@@ -239,17 +239,11 @@ import Link from "next/link";
 import styles from "./containers.module.css";
 
 const AREAS = [
-  { title: "Infrastructure Real Estate", href: "/services#infrastructure-real-estate" },
-  { title: "Commercial Real Estate", href: "/services#commercial-real-estate" },
-  { title: "Residential Real Estate", href: "/services#residential-real-estate" },
+  { title: "Artifcial Intelligence" , href: "/services#ai-adoption" },
   { title: "Corporate Law", href: "/services#corporate-law" },
-  { title: "Mergers and Acquisitions", href: "/services#mergers-and-acquisitions" },
-  { title: "Privacy and Data Protection", href: "/services#privacy-and-data-protection" },
-  { title: "Dispute Resolution", href: "/services#dispute-resolution" },
-  { title: "AI Adoption", href: "/services#ai-adoption" },
   { title: "Immigration Law", href: "/services#immigration-law" },
-  { title: "Notary Services", href: "/services#notary-services" },
-  { title: "Litigation", href: "/services#litigation" },
+  { title: "Privacy and Data Protection", href: "/services#privacy-and-data-protection" },
+  { title: "Real Estate", href: "/services#real-estate" },
 ];
 
 export default function PracticeAreas() {

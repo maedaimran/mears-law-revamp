@@ -228,19 +228,19 @@ export default function ServicesPage() {
 
   const sections = [
     {
-      id: "infrastructure-real-estate",
-      title: "Infrastructure Real Estate",
+      id: "ai-adoption",
+      title: "AI Adoption",
       blurb:
-        "Our firm advises developers, contractors, investors, and public authorities on large-scale infrastructure projects across Canada. From project planning and financing to construction and regulatory compliance, we ensure each development is structured efficiently and meets all legal and governmental standards.",
+        "As artificial intelligence transforms industries, we help organizations navigate legal and ethical challenges associated with AI adoption. Our lawyers provide guidance on regulatory compliance, data use, intellectual property, and risk mitigation, helping clients integrate AI responsibly and effectively.",
       keys: [
-        "Project Planning & Development",
-        "Public-Private Partnerships (P3)",
-        "Construction Contracts & Risk Allocation",
-        "Financing & Security",
-        "Permitting & Regulatory Compliance",
-        "Procurement & Tendering",
+        "AI Regulatory Readiness",
+        "Ethical AI Frameworks",
+        "IP & Data Licensing",
+        "Compliance & Risk",
+        "Vendor Procurement",
+        "Product Governance",
       ],
-      clients: ["Developers", "Contractors", "Investors", "Public Authorities"],
+      clients: ["Tech Startups", "Enterprises", "Public Entities"],
     },
     {
       id: "commercial-real-estate",
@@ -258,21 +258,6 @@ export default function ServicesPage() {
       clients: ["Investors", "Developers", "REITs"],
     },
     {
-      id: "residential-real-estate",
-      title: "Residential Real Estate",
-      blurb:
-        "Whether you are buying, selling, or refinancing your property, our lawyers provide experienced guidance through every stage of a residential transaction. We handle title searches, purchase agreements, mortgage documentation, and closing processes with attention to detail and care.",
-      keys: [
-        "Purchase & Sale Agreements",
-        "Title Searches & Insurance",
-        "Mortgage & Refinance",
-        "Condominium & New-Build",
-        "Closing Management",
-        "Private Lending",
-      ],
-      clients: ["Home Buyers", "Sellers", "Lenders", "Builders"],
-    },
-    {
       id: "corporate-law",
       title: "Corporate Law",
       blurb:
@@ -288,6 +273,79 @@ export default function ServicesPage() {
       clients: ["Corporations", "Startups", "Family Enterprises"],
     },
     {
+      id: "dispute-resolution",
+      title: "Dispute Resolution",
+      blurb:
+        "We help clients resolve disputes through negotiation, mediation, arbitration, or litigation. Our focus is always on achieving fair, timely, and cost-effective outcomes. Whether it's a commercial conflict or a contractual disagreement, we advocate firmly and strategically on your behalf.",
+      keys: [
+        "Negotiation & Mediation",
+        "Arbitration & Litigation",
+        "Commercial Disputes",
+        "Contract Disputes",
+        "Shareholder Disputes",
+        "Appeals",
+      ],
+      clients: ["Corporations", "Small Businesses", "Entrepreneurs"],
+    },
+    {
+      id: "immigration-law",
+      title: "Immigration Law",
+      blurb:
+        "Our Immigration Law team assists individuals, families, and employers with all aspects of immigration and citizenship. We provide representation for work permits, permanent residency, study permits, and compliance matters, ensuring a smooth and transparent process.",
+      keys: [
+        "Work Permits",
+        "Permanent Residency",
+        "Family Sponsorship",
+        "Employer Compliance",
+        "Citizenship Applications",
+        "Appeals",
+      ],
+      clients: ["Individuals", "Families", "Employers"],
+    },
+    {
+      id: "infrastructure-real-estate",
+      title: "Infrastructure Real Estate",
+      blurb:
+        "Our firm advises developers, contractors, investors, and public authorities on large-scale infrastructure projects across Canada. From project planning and financing to construction and regulatory compliance, we ensure each development is structured efficiently and meets all legal and governmental standards.",
+      keys: [
+        "Project Planning & Development",
+        "Public-Private Partnerships (P3)",
+        "Construction Contracts & Risk Allocation",
+        "Financing & Security",
+        "Permitting & Regulatory Compliance",
+        "Procurement & Tendering",
+      ],
+      clients: ["Developers", "Contractors", "Investors", "Public Authorities"],
+    },
+    {
+      id: "law-and-regulations",
+      title: "Law and Regulations",
+      blurb:
+        "We offer comprehensive legal services in AI governance, training, product development, and acquisition. Our team ensures that your AI initiatives comply with the latest regulations and best practices. We assist clients in understanding and complying with federal, provincial, and municipal regulations. Our team provides guidance on licensing, administrative compliance, and regulatory investigations.",
+      keys: [
+        "AI Governance",
+        "Regulatory Training",
+        "Product Development & Acquisition",
+        "Federal & Provincial Compliance",
+        "Licensing & Investigations",
+      ],
+      clients: ["Corporations", "Public Entities", "Startups"],
+    },
+    {
+      id: "litigation",
+      title: "Litigation",
+      blurb:
+        "Our litigation lawyer is an experienced advocate in civil, commercial, and administrative proceedings. We represent clients before all levels of court and tribunals, combining rigorous legal analysis with strategic advocacy to achieve favourable results.",
+      keys: [
+        "Civil Litigation",
+        "Commercial Litigation",
+        "Administrative Proceedings",
+        "Tribunal Advocacy",
+        "Appeals",
+      ],
+      clients: ["Corporations", "Professionals", "Individuals"],
+    },
+    {
       id: "mergers-and-acquisitions",
       title: "Mergers and Acquisitions",
       blurb:
@@ -301,6 +359,19 @@ export default function ServicesPage() {
         "Post-Closing Integration",
       ],
       clients: ["Private Equity", "Corporate Buyers", "Founders"],
+    },
+    {
+      id: "notary-services",
+      title: "Notary Services",
+      blurb:
+        "We provide notarial services for a wide range of legal documents, including affidavits, statutory declarations, certified copies, and international documents. Our notaries ensure accuracy, compliance, and professionalism in every certification.",
+      keys: [
+        "Affidavits & Declarations",
+        "Certified True Copies",
+        "Consent Letters & Invitations",
+        "Apostille & Authentication Support",
+      ],
+      clients: ["Individuals", "Businesses", "Professionals"],
     },
     {
       id: "privacy-and-data-protection",
@@ -333,90 +404,19 @@ export default function ServicesPage() {
       clients: ["Developers", "Lenders", "Owners"],
     },
     {
-      id: "dispute-resolution",
-      title: "Dispute Resolution",
+      id: "residential-real-estate",
+      title: "Residential Real Estate",
       blurb:
-        "We help clients resolve disputes through negotiation, mediation, arbitration, or litigation. Our focus is always on achieving fair, timely, and cost-effective outcomes. Whether it's a commercial conflict or a contractual disagreement, we advocate firmly and strategically on your behalf.",
+        "Whether you are buying, selling, or refinancing your property, our lawyers provide experienced guidance through every stage of a residential transaction. We handle title searches, purchase agreements, mortgage documentation, and closing processes with attention to detail and care.",
       keys: [
-        "Negotiation & Mediation",
-        "Arbitration & Litigation",
-        "Commercial Disputes",
-        "Contract Disputes",
-        "Shareholder Disputes",
-        "Appeals",
+        "Purchase & Sale Agreements",
+        "Title Searches & Insurance",
+        "Mortgage & Refinance",
+        "Condominium & New-Build",
+        "Closing Management",
+        "Private Lending",
       ],
-      clients: ["Corporations", "Small Businesses", "Entrepreneurs"],
-    },
-    {
-      id: "ai-adoption",
-      title: "AI Adoption",
-      blurb:
-        "As artificial intelligence transforms industries, we help organizations navigate legal and ethical challenges associated with AI adoption. Our lawyers provide guidance on regulatory compliance, data use, intellectual property, and risk mitigation, helping clients integrate AI responsibly and effectively.",
-      keys: [
-        "AI Regulatory Readiness",
-        "Ethical AI Frameworks",
-        "IP & Data Licensing",
-        "Compliance & Risk",
-        "Vendor Procurement",
-        "Product Governance",
-      ],
-      clients: ["Tech Startups", "Enterprises", "Public Entities"],
-    },
-    {
-      id: "immigration-law",
-      title: "Immigration Law",
-      blurb:
-        "Our Immigration Law team assists individuals, families, and employers with all aspects of immigration and citizenship. We provide representation for work permits, permanent residency, study permits, and compliance matters, ensuring a smooth and transparent process.",
-      keys: [
-        "Work Permits",
-        "Permanent Residency",
-        "Family Sponsorship",
-        "Employer Compliance",
-        "Citizenship Applications",
-        "Appeals",
-      ],
-      clients: ["Individuals", "Families", "Employers"],
-    },
-    {
-      id: "notary-services",
-      title: "Notary Services",
-      blurb:
-        "We provide notarial services for a wide range of legal documents, including affidavits, statutory declarations, certified copies, and international documents. Our notaries ensure accuracy, compliance, and professionalism in every certification.",
-      keys: [
-        "Affidavits & Declarations",
-        "Certified True Copies",
-        "Consent Letters & Invitations",
-        "Apostille & Authentication Support",
-      ],
-      clients: ["Individuals", "Businesses", "Professionals"],
-    },
-    {
-      id: "litigation",
-      title: "Litigation",
-      blurb:
-        "Our litigation lawyer is an experienced advocate in civil, commercial, and administrative proceedings. We represent clients before all levels of court and tribunals, combining rigorous legal analysis with strategic advocacy to achieve favourable results.",
-      keys: [
-        "Civil Litigation",
-        "Commercial Litigation",
-        "Administrative Proceedings",
-        "Tribunal Advocacy",
-        "Appeals",
-      ],
-      clients: ["Corporations", "Professionals", "Individuals"],
-    },
-    {
-      id: "law-and-regulations",
-      title: "Law and Regulations",
-      blurb:
-        "We offer comprehensive legal services in AI governance, training, product development, and acquisition. Our team ensures that your AI initiatives comply with the latest regulations and best practices. We assist clients in understanding and complying with federal, provincial, and municipal regulations. Our team provides guidance on licensing, administrative compliance, and regulatory investigations.",
-      keys: [
-        "AI Governance",
-        "Regulatory Training",
-        "Product Development & Acquisition",
-        "Federal & Provincial Compliance",
-        "Licensing & Investigations",
-      ],
-      clients: ["Corporations", "Public Entities", "Startups"],
+      clients: ["Home Buyers", "Sellers", "Lenders", "Builders"],
     },
   ];
 
@@ -428,26 +428,26 @@ export default function ServicesPage() {
           <svg className="bg-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" preserveAspectRatio="xMidYMid slice">
             <defs>
               <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style={{stopColor: '#1E3A5F', stopOpacity: 0.25}} />
-                <stop offset="50%" style={{stopColor: '#1E3A5F', stopOpacity: 0.35}} />
-                <stop offset="100%" style={{stopColor: '#1E3A5F', stopOpacity: 0.25}} />
+                <stop offset="0%" style={{stopColor: '#0A1628', stopOpacity: 0.12}} />
+                <stop offset="50%" style={{stopColor: '#0A1628', stopOpacity: 0.18}} />
+                <stop offset="100%" style={{stopColor: '#0A1628', stopOpacity: 0.12}} />
               </linearGradient>
             </defs>
             
             {/* Animated lines */}
             <g className="line-group">
               <path d="M0,150 Q300,100 600,150 T1200,150" fill="none" stroke="url(#grad1)" strokeWidth="2.5" className="line line-1"/>
-              <path d="M0,180 Q300,130 600,180 T1200,180" fill="none" stroke="#1E3A5F" strokeWidth="2" opacity="0.28" className="line line-2"/>
-              <path d="M0,120 Q300,70 600,120 T1200,120" fill="none" stroke="#1E3A5F" strokeWidth="1.5" opacity="0.22" className="line line-3"/>
-              <path d="M0,200 Q300,250 600,200 T1200,200" fill="none" stroke="#1E3A5F" strokeWidth="2" opacity="0.25" className="line line-4"/>
-              <path d="M0,90 Q300,40 600,90 T1200,90" fill="none" stroke="#1E3A5F" strokeWidth="1.5" opacity="0.18" className="line line-5"/>
+              <path d="M0,180 Q300,130 600,180 T1200,180" fill="none" stroke="#0A1628" strokeWidth="2" opacity="0.15" className="line line-2"/>
+              <path d="M0,120 Q300,70 600,120 T1200,120" fill="none" stroke="#0A1628" strokeWidth="1.5" opacity="0.12" className="line line-3"/>
+              <path d="M0,200 Q300,250 600,200 T1200,200" fill="none" stroke="#0A1628" strokeWidth="2" opacity="0.14" className="line line-4"/>
+              <path d="M0,90 Q300,40 600,90 T1200,90" fill="none" stroke="#0A1628" strokeWidth="1.5" opacity="0.10" className="line line-5"/>
             </g>
             
             {/* Subtle dots */}
-            <circle cx="200" cy="150" r="4" fill="#1E3A5F" opacity="0.3" className="dot dot-1"/>
-            <circle cx="500" cy="180" r="3" fill="#1E3A5F" opacity="0.28" className="dot dot-2"/>
-            <circle cx="800" cy="120" r="3.5" fill="#1E3A5F" opacity="0.25" className="dot dot-3"/>
-            <circle cx="1000" cy="200" r="3" fill="#1E3A5F" opacity="0.22" className="dot dot-4"/>
+            <circle cx="200" cy="150" r="4" fill="#0A1628" opacity="0.18" className="dot dot-1"/>
+            <circle cx="500" cy="180" r="3" fill="#0A1628" opacity="0.16" className="dot dot-2"/>
+            <circle cx="800" cy="120" r="3.5" fill="#0A1628" opacity="0.14" className="dot dot-3"/>
+            <circle cx="1000" cy="200" r="3" fill="#0A1628" opacity="0.12" className="dot dot-4"/>
           </svg>
         </div>
         
@@ -495,7 +495,7 @@ export default function ServicesPage() {
           width: 100%;
           height: 100%;
           overflow: hidden;
-          opacity: 0.8;
+          opacity: 0.5;
         }
 
         .bg-svg {
@@ -561,11 +561,11 @@ export default function ServicesPage() {
 
         @keyframes pulse {
           0%, 100% {
-            opacity: 0.25;
+            opacity: 0.12;
             transform: scale(1);
           }
           50% {
-            opacity: 0.45;
+            opacity: 0.22;
             transform: scale(1.3);
           }
         }
@@ -587,7 +587,7 @@ export default function ServicesPage() {
         }
 
         .page{ 
-          background:#FFFFFF; 
+          background:#f3f4f6; 
           color:var(--body); 
           min-height:100vh; 
         }
@@ -620,7 +620,7 @@ export default function ServicesPage() {
         .h1{ 
           font-size:52px; 
           line-height:1.1; 
-          color:var(--ink); 
+          color:#0A1628; 
           font-weight:700; 
           margin:0 0 16px; 
         }
@@ -629,7 +629,7 @@ export default function ServicesPage() {
           font-size:20px; 
           line-height:1.65; 
           margin:0; 
-          color:var(--body); 
+          color:#374151; 
           opacity:.9; 
         }
         
@@ -641,7 +641,7 @@ export default function ServicesPage() {
 
         .section{ 
           padding:48px 0 64px;
-          background:#FFFFFF;
+          background:#f3f4f6;
         }
 
         .stack{ 

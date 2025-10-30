@@ -1,0 +1,141 @@
+.privacy-terms-page {
+  background: #fafbfc;
+  min-height: 100vh;
+  padding: 60px 0 100px;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+.privacy-container {
+  width: min(900px, 92%);
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 60px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.page-title {
+  font-weight: 600;
+  font-size: clamp(32px, 5vw, 42px);
+  color: #0A1628;
+  margin: 0 0 12px;
+  letter-spacing: -0.5px;
+}
+
+.page-subtitle {
+  font-size: 16px;
+  color: #6b7280;
+  font-weight: 400;
+  margin: 0;
+}
+
+.content-section {
+  margin-bottom: 50px;
+}
+
+.section-title {
+  font-weight: 600;
+  font-size: 28px;
+  color: #0A1628;
+  margin: 0 0 24px;
+  letter-spacing: -0.3px;
+}
+
+.section-content {
+  color: #4B5563;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.section-content p {
+  margin: 0 0 20px;
+}
+
+.section-content p:last-child {
+  margin-bottom: 0;
+}
+
+.emphasis {
+  font-weight: 600;
+  color: #0A1628;
+}
+
+.subsection-title {
+  font-weight: 600;
+  font-size: 20px;
+  color: #0A1628;
+  margin: 32px 0 16px;
+  letter-spacing: -0.2px;
+}
+
+.subsection-title:first-child {
+  margin-top: 0;
+}
+
+.privacy-link {
+  color: #4B8071;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.privacy-link:hover {
+  color: #3a6659;
+  text-decoration: underline;
+}
+
+.contact-details {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 20px;
+}
+
+.contact-details p {
+  margin: 0 0 8px;
+  color: #0A1628;
+}
+
+.contact-details p:last-child {
+  margin-bottom: 0;
+}
+
+.contact-details strong {
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .privacy-terms-page {
+    padding: 40px 0 80px;
+  }
+
+  .page-header {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+  }
+
+  .page-title {
+    font-size: 32px;
+  }
+
+  .section-title {
+    font-size: 24px;
+  }
+
+  .subsection-title {
+    font-size: 18px;
+    margin: 24px 0 12px;
+  }
+
+  .section-content {
+    font-size: 15px;
+  }
+
+  .contact-details {
+    padding: 20px;
+  }
+}

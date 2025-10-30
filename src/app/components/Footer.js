@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
+import Link from "next/link";
 
 const YEAR = new Date().getFullYear();
 
@@ -23,7 +24,8 @@ export default function Footer() {
       /* ===== Updates strip (GLOBAL-ISH look, but scoped by class) ===== */
       .updates-strip{
         --navy:#0A1628;
-        background:#0f223b;
+        --purple:#1f1e3f;
+        background:var(--purple);
         border-top:1px solid rgba(255,255,255,.1);
         border-bottom:1px solid rgba(255,255,255,.1);
       }
@@ -50,7 +52,7 @@ export default function Footer() {
         --ink:#eaf2ff;
         --ink-dim:#c7d5e9;
         --radius:12px;
-        --cta-gray:#eff0f3;
+        --cta-gray:#E5E7EB;
         --accent:#4B8071;
 
         position:relative; z-index:1;
@@ -130,6 +132,8 @@ export default function Footer() {
 
       .site-footer .divider{ border:0; border-top:1px solid rgba(255,255,255,.15); margin:18px 0; }
       .site-footer .copyright{ font-size:14px; color:var(--ink-dim); }
+      .site-footer .privacy-link{ color:var(--ink-dim); text-decoration:underline; margin-top:8px; display:inline-block; transition:color .2s ease; }
+      .site-footer .privacy-link:hover{ color:var(--ink); }
 
       .site-footer .heading{
         font-weight:800; letter-spacing:0.1px;
@@ -231,7 +235,9 @@ export default function Footer() {
       ),
       el("hr", { className:"divider" }),
       el("div", { className:"copyright" },
-        `© ${YEAR} Mears Law. All rights reserved. | Client-Centered, Results-Driven.`
+        `© ${YEAR} Mears Law. All rights reserved. | Client-Centered, Results-Driven.`,
+        el("br"),
+        el(Link, { className:"privacy-link", href:"/privacy" }, "Privacy Policy & Terms")
       )
     );
 

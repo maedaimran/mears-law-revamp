@@ -10,7 +10,6 @@ export default function Footer() {
     phoneHref: "tel:+14378882974",
     email: "info@mearslaw.ca",
     emailHref: "mailto:info@mearslaw.ca",
-    address: "120 Adelaide St W, Toronto, ON M5H 1T1",
   };
 
   // ---- CSS (injected once) ----
@@ -24,26 +23,24 @@ export default function Footer() {
       /* ===== Updates strip (GLOBAL-ISH look, but scoped by class) ===== */
       .updates-strip{
         --navy:#0A1628;
-        --gray-200:#E5E7EB;
-        --gray-300:#D1D5DB;
-        background:var(--gray-200);
-        border-top:1px solid var(--gray-300);
-        border-bottom:1px solid var(--gray-300);
+        background:#0f223b;
+        border-top:1px solid rgba(255,255,255,.1);
+        border-bottom:1px solid rgba(255,255,255,.1);
       }
       .updates-strip .container{ width:min(1200px,92%); margin:0 auto; }
       .updates-strip .strip-inner{
         display:flex; align-items:center; justify-content:center; gap:16px;
         padding:10px 0; min-height:46px;
       }
-      .updates-strip .strip-text{ font-weight:700; font-size:17px; color:var(--navy); text-align:center; letter-spacing:0.1px; }
+      .updates-strip .strip-text{ font-weight:700; font-size:17px; color:#fff; text-align:center; letter-spacing:0.1px; }
       .updates-strip .strip-btn{
         display:inline-flex; align-items:center; gap:6px;
         padding:8px 14px; border-radius:4px;
         background:#fff; color:var(--navy);
-        border:1px solid var(--gray-300);
+        border:1px solid rgba(255,255,255,.2);
         font-weight:600; font-size:14px; line-height:1; text-decoration:none;
       }
-      .updates-strip .strip-btn:hover{ transform:translateY(-1px); box-shadow:0 4px 10px rgba(0,0,0,.12); }
+      .updates-strip .strip-btn:hover{ transform:translateY(-1px); box-shadow:0 4px 10px rgba(0,0,0,.3); }
       .updates-strip .strip-btn .arrow{ display:inline-block; transform:translateX(1px); }
 
       /* ===== Footer ===== */
@@ -53,21 +50,28 @@ export default function Footer() {
         --ink:#eaf2ff;
         --ink-dim:#c7d5e9;
         --radius:12px;
+        --cta-gray:#eff0f3;
+        --accent:#4B8071;
 
         position:relative; z-index:1;
         background:var(--navy);
         color:var(--ink);
-        padding:36px 0 54px;
+        padding:0 0 54px;
       }
       .site-footer .container{ width:min(1200px,92%); margin:0 auto; }
 
-      .site-footer .cta-section{ text-align:center; padding-bottom:56px; }
+      .site-footer .cta-section{ 
+        text-align:center; 
+        padding:56px 0; 
+        background:var(--cta-gray);
+        margin-bottom:48px;
+      }
       .site-footer .cta-title{
         font-weight:800; letter-spacing:-0.2px;
         font-size:clamp(26px, 4vw, 40px);
-        margin:0 0 10px; color:#fff;
+        margin:0 0 10px; color:#0A1628;
       }
-      .site-footer .cta-sub{ margin:0 0 18px; color:var(--ink-dim); }
+      .site-footer .cta-sub{ margin:0 0 18px; color:#4B5563; }
       .site-footer .cta-btn,
       .site-footer .cta-btn:visited,
       .site-footer .cta-btn:link,
@@ -79,10 +83,35 @@ export default function Footer() {
         border:1px solid rgba(0,0,0,.08);
         font-weight:700; text-decoration:none;
         box-shadow:0 6px 16px rgba(0,0,0,.15);
-        transition:transform .2s ease, box-shadow .2s ease;
+        transition:all .3s ease;
+        position:relative;
+        overflow:hidden;
       }
-      .site-footer .cta-btn:hover{ transform:translateY(-1px); box-shadow:0 8px 20px rgba(0,0,0,.18); }
-      .site-footer .arrow{ display:inline-block; transform:translateX(2px); }
+      .site-footer .cta-btn::before{
+        content:'';
+        position:absolute;
+        top:0; left:0; right:0; bottom:0;
+        background:var(--accent);
+        transform:translateX(-100%);
+        transition:transform .3s ease;
+        z-index:-1;
+      }
+      .site-footer .cta-btn:hover{ 
+        transform:translateY(-2px); 
+        box-shadow:0 8px 20px rgba(0,0,0,.18);
+        color:#fff;
+      }
+      .site-footer .cta-btn:hover::before{
+        transform:translateX(0);
+      }
+      .site-footer .arrow{ 
+        display:inline-block; 
+        transform:translateX(2px);
+        transition:transform .3s ease;
+      }
+      .site-footer .cta-btn:hover .arrow{
+        transform:translateX(6px);
+      }
 
       .site-footer .footer-grid{
         display:grid; grid-template-columns:2fr 1fr 1fr; gap:24px;
@@ -180,12 +209,14 @@ export default function Footer() {
 
   // ===== CTA section =====
   const Cta =
-    el("div", { className:"container cta-section" },
-      el("h2", { className:"cta-title" }, "Ready to Discuss Your Legal Matter?"),
-      el("p", { className:"cta-sub" }, "Get expert legal guidance tailored to your specific needs. Schedule a confidential consultation to explore how we can help."),
-      el("a", { className:"cta-btn", href:"#book", "aria-label":"Book Consultation" },
-        "Book Consultation ",
-        el("span", { className:"arrow" }, "→")
+    el("div", { className:"cta-section" },
+      el("div", { className:"container" },
+        el("h2", { className:"cta-title" }, "Ready to Discuss Your Legal Matter?"),
+        el("p", { className:"cta-sub" }, "Get expert legal guidance tailored to your specific needs. Schedule a confidential consultation to explore how we can help."),
+        el("a", { className:"cta-btn", href:"#book", "aria-label":"Book Consultation" },
+          "Book Consultation ",
+          el("span", { className:"arrow" }, "→")
+        )
       )
     );
 
@@ -204,7 +235,7 @@ export default function Footer() {
       )
     );
 
-  // ===== Contact info =====
+  // ===== Contact info (WITHOUT address) =====
   const ContactBlock =
     el("div", null,
       el("h4", { className:"heading" }, "Contact Info"),
@@ -228,20 +259,20 @@ export default function Footer() {
           ),
           CONTACT.email
         ),
-        // Address
-        el("div", { className:"contact-item" },
+        // Offices link (replaces address)
+        el("a", { className:"contact-item", href:"/offices" },
           el("span", { className:"icon", "aria-hidden":"true" },
-            svg({ viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"1.8", strokeLinecap:"round" }, [
-              path({ d:"M12 22s8-5.4 8-12a8 8 0 1 0-16 0c0 6.6 8 12 8 12Z" }),
-              circle({ cx:"12", cy:"10", r:"3" })
+            svg({ viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"1.8", strokeLinecap:"round", strokeLinejoin:"round" }, [
+              path({ d:"M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" }),
+              path({ d:"M9 22V12h6v10" })
             ])
           ),
-          el("address", { className:"addr" }, CONTACT.address)
+          "Offices"
         )
       )
     );
 
-  // ===== Follow + socials + OFFICES link =====
+  // ===== Follow + socials =====
   const SocialsBlock =
     el("div", null,
       el("h4", { className:"heading" }, "Follow"),
@@ -266,9 +297,7 @@ export default function Footer() {
             path({ d:"M21 8.5c-2.3 0-4.3-1.1-5.6-2.8V17a7 7 0 1 1-7-7c.6 0 1.2.1 1.7.3v3.2a3.7 3.7 0 1 0 2.6 3.5V2h3.2c.3 2.6 2.4 4.6 5.1 4.9V8.5z" })
           ])
         )
-      ),
-      // New OFFICES link -> /offices
-      el("a", { className:"offices-link", href:"/offices" }, "Offices")
+      )
     );
 
   const FooterGrid =

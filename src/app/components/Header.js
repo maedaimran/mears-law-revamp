@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useCallback, useEffect, createElement as h, Fragment } from "react";
+import Link from "next/link";
 
 /* ---------- inline CSS (copied from your JSX block, unchanged in look/feel) ---------- */
 const CSS = `
@@ -153,7 +154,7 @@ export default function Header() {
 
   /* brand */
   const brandLink = h(
-    "a",
+    Link,
     { className: "brand", href: "/", "aria-label": "Mears Law home" },
     h("img", { src: "/images/mears-logo.png", alt: "Mears Law logo", className: "brand-mark-img" })
   );
@@ -162,12 +163,13 @@ export default function Header() {
   const navLinks = h(
     "nav",
     { className: "nav-links", "aria-label": "Primary" },
-    h("a", { href: "/" }, "Home"),
-    h("a", { href: "#about" }, "About"),
-    h("a", { href: "/services" }, "Services"),
-    h("a", { href: "#insights" }, "Insights"),
-    h("a", { href: "#careers" }, "Careers"),
-    h("a", { href: "/contact" }, "Contact")
+    h(Link, { href: "/" }, "Home"),
+    h(Link, { href: "/about" }, "About"),
+    h(Link, { href: "/services" }, "Services"),
+    h(Link, { href: "/insights" }, "Insights"),
+    h(Link, { href: "/careers" }, "Careers"),
+    h(Link, { href: "/contact" }, "Contact"),
+    h(Link, { href: "/offices" }, "Offices")
   );
 
   /* desktop cta + hamburger */
@@ -175,7 +177,7 @@ export default function Header() {
     "div",
     { className: "cta" },
     h(
-      "a",
+      Link,
       { className: "btn btn-primary", href: "#book", "aria-label": "Book consultation" },
       "Book Consultation"
     ),
@@ -201,7 +203,7 @@ export default function Header() {
     "div",
     { className: "drawer-header" },
     h(
-      "a",
+      Link,
       { className: "brand", href: "/", onClick: closeMenu, "aria-label": "Mears Law home" },
       h("img", { src: "/images/mears-logo.png", alt: "Mears Law logo", className: "brand-mark-img small" })
     ),
@@ -215,18 +217,19 @@ export default function Header() {
   const mobileLinks = h(
     "nav",
     { className: "mobile-links", "aria-label": "Mobile" },
-    h("a", { href: "/", onClick: closeMenu }, "Home"),
-    h("a", { href: "#about", onClick: closeMenu }, "About"),
-    h("a", { href: "/services", onClick: closeMenu }, "Services"),
-    h("a", { href: "#insights", onClick: closeMenu }, "Insights"),
-    h("a", { href: "#careers", onClick: closeMenu }, "Careers"),
-    h("a", { href: "/contact", onClick: closeMenu }, "Contact")
+    h(Link, { href: "/", onClick: closeMenu }, "Home"),
+    h(Link, { href: "/about", onClick: closeMenu }, "About"),
+    h(Link, { href: "/services", onClick: closeMenu }, "Services"),
+    h(Link, { href: "/insights", onClick: closeMenu }, "Insights"),
+    h(Link, { href: "/careers", onClick: closeMenu }, "Careers"),
+    h(Link, { href: "/contact", onClick: closeMenu }, "Contact"),
+    h(Link, { href: "/offices", onClick: closeMenu }, "Offices")
   );
 
   const mobileCta = h(
     "div",
     { className: "mobile-cta" },
-    h("a", { className: "btn", href: "#book", onClick: closeMenu }, "Book Consultation")
+    h(Link, { className: "btn", href: "#book", onClick: closeMenu }, "Book Consultation")
   );
 
   const drawer = h(

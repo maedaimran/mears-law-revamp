@@ -181,10 +181,41 @@ export default function Footer() {
       .site-footer .offices-link:hover{ text-decoration:underline; }
 
       @media (max-width:900px){
-        .updates-strip .strip-inner{ gap:10px; padding:8px 0; min-height:42px; }
-        .updates-strip .strip-text{ font-size:16px; }
-        .updates-strip .strip-btn{ padding:8px 12px; }
+        .updates-strip .strip-inner{ 
+          flex-direction:column; 
+          gap:14px; 
+          padding:16px 0; 
+          min-height:auto; 
+        }
+        .updates-strip .strip-text{ 
+          font-size:16px; 
+          line-height:1.4;
+        }
+        .updates-strip .strip-btn{ 
+          padding:10px 20px; 
+          font-size:15px;
+          border-radius:6px;
+          width:auto;
+          min-width:120px;
+          justify-content:center;
+        }
         .site-footer .footer-grid{ grid-template-columns:1fr; }
+      }
+      
+      @media (max-width:480px){
+        .updates-strip .strip-inner{ 
+          padding:20px 16px; 
+        }
+        .updates-strip .strip-text{ 
+          font-size:15px; 
+        }
+        .updates-strip .strip-btn{ 
+          padding:12px 24px; 
+          font-size:16px;
+          font-weight:700;
+          width:100%;
+          max-width:280px;
+        }
       }
     `;
     const tag = document.createElement("style");

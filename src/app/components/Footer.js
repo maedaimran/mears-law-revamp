@@ -236,7 +236,7 @@ export default function Footer() {
   const UpdatesStrip =
     el("section", { className:"updates-strip", role:"region", "aria-label":"Email updates" },
       el("div", { className:"container strip-inner" },
-        el("span", { className:"strip-text" }, "Want to receive updates from Mears?"),
+        el("span", { className:"strip-text" }, "Want to receive updates from Mears Law?"),
         el("a", { className:"strip-btn", href:"#signup", "aria-label":"Sign up for updates" },
           "Sign up ",
           el("span", { className:"arrow" }, "›")
@@ -349,7 +349,7 @@ export default function Footer() {
     // Updates strip
     el("section", { className:"updates-strip", role:"region", "aria-label":"Email updates" },
       el("div", { className:"container strip-inner" },
-        el("span", { className:"strip-text" }, "Want to receive updates from Mears?"),
+        el("span", { className:"strip-text" }, "Want to receive updates from Mears Law?"),
         el("a", { className:"strip-btn", href:"#signup", "aria-label":"Sign up for updates" },
           "Sign up ", el("span", { className:"arrow" }, "›")
         )

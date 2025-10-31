@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AISearchResults from './AISearchResults';
 import './hero.css';
 
@@ -8,6 +8,38 @@ export default function Hero() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showResults, setShowResults] = useState(false);
   const [currentQuery, setCurrentQuery] = useState('');
+
+  // Typing animation for rotating words
+  const words = ["Clarity", "Integrity", "Insight"];
+  const [wordIndex, setWordIndex] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentWord = words[wordIndex % words.length];
+
+    let timeoutId;
+    if (!isDeleting) {
+      if (displayText.length < currentWord.length) {
+        timeoutId = setTimeout(() => {
+          setDisplayText(currentWord.slice(0, displayText.length + 1));
+        }, 120);
+      } else {
+        timeoutId = setTimeout(() => setIsDeleting(true), 1100);
+      }
+    } else {
+      if (displayText.length > 0) {
+        timeoutId = setTimeout(() => {
+          setDisplayText(currentWord.slice(0, displayText.length - 1));
+        }, 60);
+      } else {
+        setIsDeleting(false);
+        setWordIndex((i) => (i + 1) % words.length);
+      }
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [displayText, isDeleting, wordIndex]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -45,7 +77,10 @@ export default function Hero() {
       {/* Below-video Content (outside of hero container so it sits under the video) */}
       <div className="below-hero">
         <div className="hero-text">
-          <h1 className="hero-title">Focused Expertise, Proven</h1>
+          <h1 className="hero-title">
+            Navigating Complexity with{' '}
+            <span className="typing-word" aria-live="polite">{displayText}</span>
+          </h1>
         </div>
 
         <div className="search-container">
@@ -55,7 +90,7 @@ export default function Hero() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="How can we help you"
+                placeholder="How can we help you?"
                 className="search-input"
               />
               <button type="submit" className="search-button">

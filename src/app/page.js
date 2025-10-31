@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Containers from "./components/containers.js";
 import OurValues from "./components/OurValues.js";
-import CallToAction from "./components/CallToAction.js";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Hero from "./components/hero";
@@ -19,9 +18,6 @@ export default function Home() {
         <section>
           <Containers />
         </section>
-        <section>
-        <CallToAction />
-      </section>
       {/* </main> */}
     </div>
   );

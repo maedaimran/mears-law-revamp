@@ -169,8 +169,7 @@ export default function Header() {
     h(Link, { href: "/services" }, "Services"),
     h(Link, { href: "/insights" }, "Insights"),
     h(Link, { href: "/careers" }, "Careers"),
-    h(Link, { href: "/contact" }, "Contact"),
-    h(Link, { href: "/offices" }, "Offices")
+    h(Link, { href: "/contact" }, "Contact")
   );
 
   /* desktop cta + hamburger */
@@ -223,8 +222,7 @@ export default function Header() {
     h(Link, { href: "/services", onClick: closeMenu }, "Services"),
     h(Link, { href: "/insights", onClick: closeMenu }, "Insights"),
     h(Link, { href: "/careers", onClick: closeMenu }, "Careers"),
-    h(Link, { href: "/contact", onClick: closeMenu }, "Contact"),
-    h(Link, { href: "/offices", onClick: closeMenu }, "Offices")
+    h(Link, { href: "/contact", onClick: closeMenu }, "Contact")
   );
 
   const mobileCta = h(

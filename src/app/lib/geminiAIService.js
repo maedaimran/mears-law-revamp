@@ -64,7 +64,7 @@ class GeminiAIService {
     try {
       const model = this.client.getGenerativeModel({ model: this.model });
       
-      const prompt = `${mearsLawTrainingData.systemPrompt}\n\nUser asked: "${userQuery}"\n\nBased on this training data: "${trainingMatch.answer}"\n\nPlease provide a helpful, professional response that directly answers their question while maintaining the accuracy of the training data. 
+      const prompt = `${mearsLawTrainingData.systemPrompt}\n\nUser asked: "${userQuery}"\n\nBased on this training data: "${trainingMatch.answer}"\n\nPlease provide a concise, helpful, professional response that directly answers their question while maintaining the accuracy of the training data. Keep your response brief and to-the-point (2-4 sentences maximum). 
 
 FORMATTING INSTRUCTIONS: Use line breaks to create readable paragraphs. Separate different ideas with blank lines. Do not use markdown formatting such as **bold**, *italics*, # headers, or - bullet points. Use plain text with natural line breaks only.`;
 
@@ -85,6 +85,8 @@ FORMATTING INSTRUCTIONS: Use line breaks to create readable paragraphs. Separate
       const model = this.client.getGenerativeModel({ model: this.model });
       
       const prompt = `${mearsLawTrainingData.systemPrompt}\n\nUser question: ${userQuery}
+
+Please provide a concise response (2-4 sentences maximum). Keep your answer brief and to-the-point.
 
 FORMATTING INSTRUCTIONS: Use line breaks to create readable paragraphs. Separate different ideas with blank lines. Do not use markdown formatting such as **bold**, *italics*, # headers, or - bullet points. Use plain text with natural line breaks only.`;
 

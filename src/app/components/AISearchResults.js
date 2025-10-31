@@ -7,6 +7,7 @@ export default function AISearchResults({ query, onClose }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [inputQuery, setInputQuery] = useState('');
+  const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const hasInitialized = useRef(false);
@@ -16,7 +17,7 @@ export default function AISearchResults({ query, onClose }) {
   };
 
   const handleSearch = useCallback(async (searchQuery) => {
-    if (!searchQuery.trim()) return;
+    if (!searchQuery.trim() || !disclaimerAccepted) return;
 
     const userMessage = {
       type: 'user',
@@ -68,14 +69,14 @@ export default function AISearchResults({ query, onClose }) {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [disclaimerAccepted]);
 
   useEffect(() => {
-    if (query && query.trim() && !hasInitialized.current) {
+    if (query && query.trim() && !hasInitialized.current && disclaimerAccepted) {
       hasInitialized.current = true;
       handleSearch(query);
     }
-  }, [query, handleSearch]);
+  }, [query, handleSearch, disclaimerAccepted]);
 
   useEffect(() => {
     scrollToBottom();
@@ -99,8 +100,25 @@ export default function AISearchResults({ query, onClose }) {
       </div>
       
       <div className="chat-container">
+        {!disclaimerAccepted && (
+          <div className="disclaimer-overlay">
+            <div className="disclaimer-content">
+              <h4>Important Notice</h4>
+              <p className="disclaimer-text">
+                Our chatbot is powered by AI and provides general information only, not legal advice. Responses are automated without lawyer input. For legal advice, book a consultation. For human assistance, email <a href="mailto:info@mearslaw.ca">info@mearslaw.ca</a>. Please do not share confidential information through this chat.
+              </p>
+              <button
+                onClick={() => setDisclaimerAccepted(true)}
+                className="disclaimer-button"
+              >
+                I understand and agree
+              </button>
+            </div>
+          </div>
+        )}
+        
         <div className="messages-container">
-          {messages.length === 0 && (
+          {messages.length === 0 && disclaimerAccepted && (
             <div className="welcome-message">
               <p>Hi! I'm here to help with questions about Mears Law. Ask me anything!</p>
             </div>
@@ -141,10 +159,10 @@ export default function AISearchResults({ query, onClose }) {
             value={inputQuery}
             onChange={(e) => setInputQuery(e.target.value)}
             placeholder="Type your question here..."
-            disabled={loading}
+            disabled={loading || !disclaimerAccepted}
             className="chat-input"
           />
-          <button type="submit" disabled={loading || !inputQuery.trim()} className="send-btn">
+          <button type="submit" disabled={loading || !inputQuery.trim() || !disclaimerAccepted} className="send-btn">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="22" y1="2" x2="11" y2="13"></line>
               <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
@@ -207,6 +225,72 @@ export default function AISearchResults({ query, onClose }) {
           flex-direction: column;
           flex: 1;
           overflow: hidden;
+          position: relative;
+        }
+        
+        .disclaimer-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(255, 255, 255, 0.98);
+          backdrop-filter: blur(4px);
+          z-index: 10;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 24px;
+        }
+        
+        .disclaimer-content {
+          max-width: 500px;
+          width: 100%;
+          background: white;
+          border-radius: 12px;
+          padding: 32px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          border: 1px solid #E5E7EB;
+        }
+        
+        .disclaimer-content h4 {
+          margin: 0 0 16px 0;
+          font-size: 18px;
+          font-weight: 600;
+          color: #111827;
+        }
+        
+        .disclaimer-text {
+          color: #4B5563;
+          font-size: 14px;
+          line-height: 1.6;
+          margin: 0 0 20px 0;
+        }
+        
+        .disclaimer-text a {
+          color: #3B82F6;
+          text-decoration: none;
+        }
+        
+        .disclaimer-text a:hover {
+          text-decoration: underline;
+        }
+        
+        .disclaimer-button {
+          width: 100%;
+          background: #3B82F6;
+          color: white;
+          border: none;
+          padding: 12px 24px;
+          border-radius: 8px;
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+        
+        .disclaimer-button:hover {
+          background: #2563EB;
         }
         
         .messages-container {

@@ -22,7 +22,7 @@ const CSS = `
 .container{ width:min(1200px,92%); margin:0 auto; }
 
 /* ====== TALL HEADER BAR ====== */
-.site-header{ --bar-h:94px; }   /* larger */
+.site-header{ --bar-h:110px; }   /* larger */
 .nav{
   height:var(--bar-h);
   padding:0;
@@ -35,7 +35,7 @@ const CSS = `
 .brand-mark-img{
   width:160px; height:auto; display:block; object-fit:contain;
   filter: drop-shadow(0 3px 10px rgba(0,0,0,.28));
-  margin-top:6px;             /* small hang only */
+  margin-top:12px;             /* positioned lower */
   margin-bottom:-6px;
   flex-shrink:0;
 }
@@ -82,8 +82,9 @@ const CSS = `
 
 /* Mobile */
 @media (max-width:900px){
-  .site-header{ --bar-h:72px; }
-  .brand-mark-img{ width:140px; margin-top:-8px; margin-bottom:-8px; }
+  .site-header{ --bar-h:88px; }
+  .brand{ align-items:flex-start; padding-top:8px; }
+  .brand-mark-img{ width:140px; margin-top:0px; margin-bottom:0px; }
   .nav-links{ display:none; }
   .hamburger{ display:block; }
 }

@@ -136,18 +136,24 @@ export default function CareersPage() {
           </p>
           
         <div className="apply-action">
-            <a href="/contact" className="apply-button">
-              <span>Complete Application Form</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <line x1="5" y1="12" x2="19" y2="12"/>
-                <polyline points="12 5 19 12 12 19"/>
-              </svg>
-            </a>
-            <p className="apply-note">
-              Alternatively, send your resume and cover letter to <a href="mailto:carissa.mears@mearslaw.ca">carissa.mears@mearslaw.ca</a>
-            </p>
-          </div>
+          <a 
+            href="https://forms.office.com/Pages/ResponsePage.aspx?id=kB-JP2eaikmLL06vvXL6rEEC8YFehKhHkPXO4BVvwlJUQjlPNTlYSjZZU1YwMzVQQzBCVVNNVzhXNS4u" 
+            className="apply-button" 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            <span>Complete Application Form</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
+          <p className="apply-note">
+            Alternatively, send your resume and cover letter to 
+            <a href="mailto:carissa.mears@mearslaw.ca"> carissa.mears@mearslaw.ca</a>
+          </p>
         </div>
+      </div>
       </section>
 
       <style jsx>{`

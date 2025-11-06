@@ -567,19 +567,7 @@ export default function Footer() {
           el(
             Link,
             { className: "footer-link", href: "/privacy" },
-            "Privacy"
-          ),
-          el("span", { className: "divider" }, "|"),
-          el(
-            Link,
-            { className: "footer-link", href: "/privacy" },
-            "Terms"
-          ),
-          el("span", { className: "divider" }, "|"),
-          el(
-            Link,
-            { className: "footer-link", href: "/cookies" },
-            "Cookies"
+            "Privacy and Terms"
           )
         )
       )

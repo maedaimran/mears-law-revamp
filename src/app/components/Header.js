@@ -167,7 +167,7 @@ export default function Header() {
     h(Link, { href: "/" }, "Home"),
     h(Link, { href: "/about" }, "About"),
     h(Link, { href: "/services" }, "Services"),
-    h(Link, { href: "/insights" }, "Insights"),
+    // h(Link, { href: "/insights" }, "Insights"),
     h(Link, { href: "/careers" }, "Careers"),
     h(Link, { href: "/contact" }, "Contact")
   );
@@ -220,7 +220,7 @@ export default function Header() {
     h(Link, { href: "/", onClick: closeMenu }, "Home"),
     h(Link, { href: "/about", onClick: closeMenu }, "About"),
     h(Link, { href: "/services", onClick: closeMenu }, "Services"),
-    h(Link, { href: "/insights", onClick: closeMenu }, "Insights"),
+    // h(Link, { href: "/insights", onClick: closeMenu }, "Insights"),
     h(Link, { href: "/careers", onClick: closeMenu }, "Careers"),
     h(Link, { href: "/contact", onClick: closeMenu }, "Contact")
   );

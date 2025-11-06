@@ -238,57 +238,83 @@ export default function ContactPage() {
 
         .container { width: min(960px, 92%); margin: 0 auto; }
 
-        /* ===== Hero (matches Services/Careers) ===== */
+       /* ===== Hero Section (Aligned + Responsive) ===== */
+      .hero {
+        padding: 96px 0 48px; /* More space above, balanced below */
+        background: #ffffff;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        text-align: left;
+      }
+
+      /* Title */
+      .title.hero-h1 {
+        font-size: 52px;
+        line-height: 1.1;
+        color: #0A1628;
+        font-weight: 700;
+        margin: 0 0 16px;
+        position: relative;
+        padding-bottom: 16px;
+      }
+
+      /* Underline Animation (left-aligned) */
+      .hero-h1 .underline {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #8B5CF6, #A78BFA, #C4B5FD);
+        border-radius: 3px;
+        box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+        animation: expandUnderline 2s ease-out forwards;
+        width: 0;
+        opacity: 0;
+      }
+
+      @keyframes expandUnderline {
+        0% { width: 0; opacity: 0; }
+        50% { opacity: 1; }
+        100% { width: 120px; opacity: 1; }
+      }
+
+      /* Description */
+      .lead {
+        font-size: 20px;
+        line-height: 1.65;
+        margin: 0;
+        color: #374151;
+        opacity: 0.9;
+        text-align: left;
+        max-width: 700px;
+      }
+
+      /* ===== Responsive Adjustments ===== */
+      @media (max-width: 1024px) {
         .hero {
-          padding: 64px 0 32px;
-          background: #ffffff;
-          position: relative;
-          overflow: hidden;
+          padding: 80px 0 40px;
         }
-        .hero-content { position: relative; z-index: 1; text-align: center; }
-        .hdr { margin-bottom: 0; }
+      }
 
-        .title {
-          font-size: clamp(32px, 5vw, 52px);
-          font-weight: 700;
-          color: #0a1628;
-          margin: 0 0 12px;
-          letter-spacing: -0.02em;
-          line-height: 1.1;
-          position: relative;
-          padding-bottom: 16px;
+      @media (max-width: 720px) {
+        .hero {
+          padding: 64px 0 32px; /* tighter but still balanced */
         }
 
-        .hero-h1 .underline {
-          position: absolute;
-          bottom: 0;
-          left: 50%;
-          transform: translateX(-50%);
-          height: 5px;
-          background: linear-gradient(90deg, #8B5CF6, #A78BFA, #C4B5FD);
-          border-radius: 3px;
-          box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
-          width: 0;
-          opacity: 0;
-        }
-        .hero-h1.is-visible .underline {
-          animation: expandUnderline 2s ease-out forwards;
-        }
-        @keyframes expandUnderline {
-          0%   { width: 0; opacity: 0; }
-          50%  { opacity: 1; }
-          100% { width: 140px; opacity: 1; }
+        .title.hero-h1 {
+          font-size: 36px;
         }
 
         .lead {
-          color: #4B5563;
-          font-size: 1.125rem;
+          font-size: 18px;
           line-height: 1.7;
-          max-width: 700px;
-          margin: 0 auto;
-          font-weight: 400;
         }
-
+      }
         /* ===== Form section with subtle pattern like Services ===== */
         .form-section {
           padding: 48px 0 72px;

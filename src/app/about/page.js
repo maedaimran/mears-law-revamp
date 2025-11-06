@@ -1,15 +1,37 @@
 // src/app/about/page.js
 "use client";
 
+import { useEffect, useRef } from "react";
+
 export default function AboutPage() {
+  // Animate the underline once when the hero H1 becomes visible
+  const h1Ref = useRef(null);
+  useEffect(() => {
+    const el = h1Ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add("is-visible");
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.7 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <>
-
-      {/* ===== Hero ===== */}
+      {/* ===== Hero (styled like Services) ===== */}
       <section className="about-hero">
-        <div className="container">
+        <div className="container hero-content">
           <div className="eyebrow">ABOUT</div>
-          <h1>About Mears Law</h1>
+          <h1 ref={h1Ref} className="hero-h1">
+            About Mears Law
+            <span className="underline" aria-hidden="true"></span>
+          </h1>
           <p className="lede">
             A full-service Canadian law firm built on integrity, excellence, and dedication —
             delivering strategic, practical, and results-driven legal solutions across industries
@@ -28,7 +50,7 @@ export default function AboutPage() {
       </section>
 
       {/* ===== Who We Are + Sticky Help Card ===== */}
-      <section className="who">
+      <section className="who patterned-section">
         <div className="container who-grid">
           <div className="col prose">
             <h2>Who We Are</h2>
@@ -123,7 +145,7 @@ export default function AboutPage() {
       </section>
 
       {/* ===== Values ===== */}
-      <section className="values">
+      <section className="values patterned-section">
         <div className="container">
           <h2>Our Values</h2>
           <p className="sub">
@@ -191,31 +213,24 @@ export default function AboutPage() {
           scroll-behavior: smooth;
         }
 
-        /* Wider reading width so lines don't wrap too early */
+        /* Base container matches Services */
         .container {
           width: min(1200px, 92%);
           margin: 0 auto;
         }
 
+        /* ===== Hero styling to match Services ===== */
         .about-hero {
-          padding: 56px 0 40px;
-        }
-        .who {
-          padding: 56px 0;
-        }
-        .commitment {
-          padding: 64px 0;
-          background: #fafbfc;
-          border-top: 1px solid #e5e7eb;
-          border-bottom: 1px solid #e5e7eb;
-        }
-        .values {
-          padding: 64px 0;
+          padding: 64px 0 48px;
           background: #ffffff;
-          border-bottom: 1px solid #e5e7eb;
+          position: relative;
+          overflow: hidden;
         }
-        .team {
-          padding: 56px 0 72px;
+
+        .hero-content {
+          position: relative;
+          z-index: 1;
+          text-align: left;
         }
 
         .eyebrow {
@@ -225,41 +240,43 @@ export default function AboutPage() {
           color: #6b7280;
           margin-bottom: 8px;
         }
-        h1 {
+
+        .hero-h1 {
           font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-          font-size: clamp(28px, 4vw, 42px);
-          line-height: 1.15;
+          font-size: clamp(32px, 5vw, 52px);
+          line-height: 1.1;
           color: #0a1628;
-          margin: 0 0 10px;
-        }
-        h2 {
-          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-          font-size: clamp(22px, 3.2vw, 32px);
-          line-height: 1.2;
-          color: #0a1628;
-          margin: 0 0 18px;
-        }
-        h3 {
-          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-          font-size: 20px;
-          margin: 0;
-          color: #0a1628;
-        }
-        h4 {
-          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-          font-size: 18px;
-          margin: 0 0 6px;
-          color: #0a1628;
+          font-weight: 700;
+          margin: 0 0 16px;
+          position: relative;
+          padding-bottom: 16px;
         }
 
-        .lede,
-        .prose p,
-        .commitment .sub,
-        .commitment .note {
+        .hero-h1 .underline {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          height: 5px;
+          background: linear-gradient(90deg, #8B5CF6, #A78BFA, #C4B5FD);
+          border-radius: 3px;
+          box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+          width: 0;              /* starts collapsed */
+          opacity: 0;            /* fade in on reveal */
+        }
+
+        .hero-h1.is-visible .underline {
+          animation: expandUnderline 2s ease-out forwards;
+        }
+
+        @keyframes expandUnderline {
+          0%   { width: 0; opacity: 0; }
+          50%  { opacity: 1; }
+          100% { width: 120px; opacity: 1; }
+        }
+
+        .lede {
           font: 400 16px/1.85 Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
           color: #374151;
-        }
-        .lede {
           margin: 0 0 18px;
           max-width: none;
         }
@@ -282,26 +299,117 @@ export default function AboutPage() {
           color: #6b7280;
         }
 
-        /* Who grid + sticky help bubble */
+        /* ===== Light patterned backdrop (same vibe as Services sections) ===== */
+        .patterned-section {
+          position: relative;
+          overflow: hidden;
+          background: #f3f4f6;
+        }
+        .patterned-section::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background-image:
+            repeating-linear-gradient(
+              90deg,
+              transparent,
+              transparent 60px,
+              rgba(139, 92, 246, 0.04) 60px,
+              rgba(139, 92, 246, 0.04) 61px
+            ),
+            repeating-linear-gradient(
+              0deg,
+              transparent,
+              transparent 60px,
+              rgba(139, 92, 246, 0.04) 60px,
+              rgba(139, 92, 246, 0.04) 61px
+            );
+          pointer-events: none;
+          z-index: 0;
+        }
+        .patterned-section::after {
+          content: '';
+          position: absolute;
+          top: -100%;
+          left: -100%;
+          width: 300%;
+          height: 300%;
+          background:
+            radial-gradient(circle at 30% 50%, rgba(139, 92, 246, 0.15) 0%, transparent 25%),
+            radial-gradient(circle at 70% 50%, rgba(167, 139, 250, 0.12) 0%, transparent 25%),
+            radial-gradient(circle at 50% 80%, rgba(196, 181, 253, 0.1) 0%, transparent 25%);
+          animation: moveGradient 40s linear infinite;
+          pointer-events: none;
+          z-index: 0;
+        }
+        @keyframes moveGradient {
+          0%   { transform: translate(0, 0) rotate(0deg); }
+          50%  { transform: translate(-10%, -10%) rotate(180deg); }
+          100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .patterned-section::after { animation: none; }
+        }
+
+        /* Section paddings (kept as you had, small tweaks for parity) */
+        .about-hero { }
+        .who { padding: 56px 0; }
+        .commitment {
+          padding: 64px 0;
+          background: #fafbfc;
+          border-top: 1px solid #e5e7eb;
+          border-bottom: 1px solid #e5e7eb;
+        }
+        .values {
+          padding: 64px 0;
+          background: #ffffff;
+          border-bottom: 1px solid #e5e7eb;
+        }
+        .team { padding: 56px 0 72px; }
+
+        /* Headings */
+        h2 {
+          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+          font-size: clamp(22px, 3.2vw, 32px);
+          line-height: 1.2;
+          color: #0a1628;
+          margin: 0 0 18px;
+        }
+        h3 {
+          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+          font-size: 20px;
+          margin: 0;
+          color: #0a1628;
+        }
+        h4 {
+          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+          font-size: 18px;
+          margin: 0 0 6px;
+          color: #0a1628;
+        }
+
+        /* Who grid + sticky help bubble (unchanged) */
         .who-grid {
           display: grid;
           grid-template-columns: 2fr 1fr;
           gap: clamp(24px, 3vw, 40px);
           align-items: start;
-        }
-        .prose p + p {
-          margin-top: 14px;
-        }
-        .prose .closing {
-          margin-top: 18px;
-        }
-
-        .help {
           position: relative;
+          z-index: 1; /* above the patterned bg */
         }
+        .prose p,
+        .commitment .sub,
+        .commitment .note {
+          font: 400 16px/1.85 Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+          color: #374151;
+        }
+        .prose p + p { margin-top: 14px; }
+        .prose .closing { margin-top: 18px; }
+
+        .help { position: relative; }
         .help-card {
           position: sticky;
-          top: 96px; /* stays below the header */
+          top: 96px;
           background: #ffffff;
           border: 1px solid #e5e7eb;
           border-radius: 16px;
@@ -310,7 +418,6 @@ export default function AboutPage() {
           overflow: hidden;
         }
         .help-card::before {
-          /* subtle gradient bar at the top edge */
           content: "";
           position: absolute;
           inset: 0 0 auto 0;
@@ -325,9 +432,7 @@ export default function AboutPage() {
           color: #0a1628;
           margin-bottom: 10px;
         }
-        .help-head svg {
-          opacity: 0.85;
-        }
+        .help-head svg { opacity: 0.85; }
         .help-list {
           margin: 6px 0 0;
           padding: 0;
@@ -348,20 +453,10 @@ export default function AboutPage() {
           color: #334155;
         }
 
-        /* Commitment */
-        .commitment .sub {
-          text-align: left;            /* left, not centered */
-          margin: 4px 0 26px;
-          max-width: none;             /* allow full width */
-        }
-        .values .sub {
-          text-align: left;
-          margin: 4px 0 26px;
-          max-width: none;
-        }
-        .values .sub + .sub {
-          margin: 0 0 32px;            /* extra space before the grid */
-        }
+        /* Commitment + Values pills (unchanged) */
+        .commitment .sub { text-align: left; margin: 4px 0 26px; max-width: none; }
+        .values .sub { text-align: left; margin: 4px 0 26px; max-width: none; }
+        .values .sub + .sub { margin: 0 0 32px; }
         .pill-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -382,14 +477,14 @@ export default function AboutPage() {
         }
         .commitment .note {
           margin: 26px 0 0;
-          max-width: none;             /* span the container so it doesn’t wrap early */
-          text-align: left;            /* per your preference */
+          max-width: none;
+          text-align: left;
           font-size: 17px;
           line-height: 1.9;
           color: #344256;
         }
 
-        /* Team */
+        /* Team (unchanged) */
         .person {
           display: flex;
           align-items: flex-start;
@@ -421,37 +516,22 @@ export default function AboutPage() {
           color: #6b7280;
           margin-bottom: 8px;
         }
-
         .bio p {
           margin: 10px 0 0;
           font: 400 15.5px/1.8 Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
           color: #334155;
         }
 
+        /* Responsive tweaks */
+        @media (max-width: 900px) {
+          .who-grid { grid-template-columns: 1fr; }
+          .help-card { position: static; }
+        }
         @media (max-width: 700px) {
           .person { flex-direction: column; align-items: stretch; }
         }
-
-        @media (max-width: 1100px) {
-          .pill-grid {
-            grid-template-columns: repeat(3, 1fr);
-          }
-        }
-        @media (max-width: 900px) {
-          .who-grid {
-            grid-template-columns: 1fr;
-          }
-          .help-card {
-            position: static; /* no sticky on small screens */
-          }
-          .pill-grid {
-            grid-template-columns: 1fr 1fr;
-          }
-        }
         @media (max-width: 560px) {
-          .pill-grid {
-            grid-template-columns: 1fr;
-          }
+          .pill-grid { grid-template-columns: 1fr; }
         }
       `}</style>
     </>

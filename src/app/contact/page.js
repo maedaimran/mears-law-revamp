@@ -1,10 +1,27 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function ContactPage() {
   const [status, setStatus] = useState({ type: "", msg: "" });
   const [loading, setLoading] = useState(false);
   const [focused, setFocused] = useState({});
+  const h1Ref = useRef(null);
+
+  useEffect(() => {
+    const el = h1Ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add("is-visible");
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.7 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -23,7 +40,6 @@ export default function ContactPage() {
       company: form.get("company") || "", // honeypot
     };
 
-    // quick client validation
     if (!payload.firstName || !payload.lastName || !payload.email || !payload.message) {
       setLoading(false);
       setStatus({ type: "error", msg: "Please fill in all required fields." });
@@ -40,7 +56,10 @@ export default function ContactPage() {
 
     if (res.ok) {
       e.currentTarget.reset();
-      setStatus({ type: "success", msg: "Thank you for reaching out. We've received your message and will respond within two business days." });
+      setStatus({
+        type: "success",
+        msg: "Thank you for reaching out. We've received your message and will respond within two business days.",
+      });
     } else {
       const data = await res.json().catch(() => ({}));
       setStatus({ type: "error", msg: data?.error || "Something went wrong. Please try again." });
@@ -52,181 +71,213 @@ export default function ContactPage() {
 
   return (
     <main className="wrap">
-      <div className="container">
-        <header className="hdr">
-          <h1 className="title">Contact Us</h1>
-          <p className="lead">
-            Just share a few details, and we'll be in touch within two business days. We look forward to connecting with you.
-          </p>
-        </header>
+      <section className="hero">
+        <div className="container hero-content">
+          <header className="hdr">
+            <h1 ref={h1Ref} className="title hero-h1">
+              Contact Us
+              <span className="underline" aria-hidden="true"></span>
+            </h1>
+            <p className="lead">
+              Just share a few details, and we'll be in touch within two business days. We look
+              forward to connecting with you.
+            </p>
+          </header>
+        </div>
+      </section>
 
-        <form className="form" onSubmit={onSubmit} noValidate>
-          {/* Honeypot (hidden) */}
-          <input type="text" name="company" autoComplete="off" className="hp" tabIndex={-1} />
+      <section className="form-section patterned-section">
+        <div className="container">
+          <form className="form" onSubmit={onSubmit} noValidate>
+            {/* Honeypot (hidden) */}
+            <input type="text" name="company" autoComplete="off" className="hp" tabIndex={-1} />
 
-          <div className="row">
-            <label className="label">
-              Name <span className="req-text">(required)</span>
-            </label>
-            <div className="label-row">
-              <span className="sublabel">First Name</span>
-              <span className="sublabel">Last Name</span>
+            <div className="row">
+              <label className="label">
+                Name <span className="req-text">(required)</span>
+              </label>
+              <div className="label-row">
+                <span className="sublabel">First Name</span>
+                <span className="sublabel">Last Name</span>
+              </div>
+              <div className="cols">
+                <div className="input-wrap">
+                  <input
+                    id="firstName"
+                    name="firstName"
+                    required
+                    className={focused.firstName ? "focused" : ""}
+                    onFocus={() => handleFocus("firstName")}
+                    onBlur={() => handleBlur("firstName")}
+                  />
+                </div>
+                <div className="input-wrap">
+                  <input
+                    id="lastName"
+                    name="lastName"
+                    required
+                    className={focused.lastName ? "focused" : ""}
+                    onFocus={() => handleFocus("lastName")}
+                    onBlur={() => handleBlur("lastName")}
+                  />
+                </div>
+              </div>
             </div>
-            <div className="cols">
+
+            <div className="row">
+              <label htmlFor="email" className="label">
+                Email <span className="req-text">(required)</span>
+              </label>
               <div className="input-wrap">
-                <input 
-                  id="firstName" 
-                  name="firstName" 
-                  required 
-                  className={focused.firstName ? 'focused' : ''}
-                  onFocus={() => handleFocus('firstName')}
-                  onBlur={() => handleBlur('firstName')}
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  className={focused.email ? "focused" : ""}
+                  onFocus={() => handleFocus("email")}
+                  onBlur={() => handleBlur("email")}
                 />
               </div>
+            </div>
+
+            <div className="row">
+              <label htmlFor="companyName" className="label">
+                Company <span className="opt-text">(optional)</span>
+              </label>
               <div className="input-wrap">
-                <input 
-                  id="lastName" 
-                  name="lastName" 
-                  required 
-                  className={focused.lastName ? 'focused' : ''}
-                  onFocus={() => handleFocus('lastName')}
-                  onBlur={() => handleBlur('lastName')}
+                <input
+                  id="companyName"
+                  name="companyName"
+                  type="text"
+                  className={focused.companyName ? "focused" : ""}
+                  onFocus={() => handleFocus("companyName")}
+                  onBlur={() => handleBlur("companyName")}
                 />
               </div>
             </div>
-          </div>
 
-          <div className="row">
-            <label htmlFor="email" className="label">
-              Email <span className="req-text">(required)</span>
-            </label>
-            <div className="input-wrap">
-              <input 
-                id="email" 
-                name="email" 
-                type="email" 
-                required 
-                className={focused.email ? 'focused' : ''}
-                onFocus={() => handleFocus('email')}
-                onBlur={() => handleBlur('email')}
-              />
-            </div>
-          </div>
-
-          <div className="row">
-            <label htmlFor="companyName" className="label">
-              Company <span className="opt-text">(optional)</span>
-            </label>
-            <div className="input-wrap">
-              <input 
-                id="companyName" 
-                name="companyName" 
-                type="text"
-                className={focused.companyName ? 'focused' : ''}
-                onFocus={() => handleFocus('companyName')}
-                onBlur={() => handleBlur('companyName')}
-              />
-            </div>
-          </div>
-
-          <div className="row">
-            <label htmlFor="phone" className="label">
-              Phone <span className="opt-text">(optional)</span>
-            </label>
-            <div className="input-wrap">
-              <input 
-                id="phone" 
-                name="phone" 
-                type="tel" 
-                className={focused.phone ? 'focused' : ''}
-                onFocus={() => handleFocus('phone')}
-                onBlur={() => handleBlur('phone')}
-              />
-            </div>
-          </div>
-
-          <div className="row">
-            <label className="label">
-              Topics <span className="opt-text">(optional)</span>
-            </label>
-            <div className="topics-grid">
-              <label className="checkbox-label">
-                <input type="checkbox" name="topics" value="legal-representation" />
-                <span className="checkbox-text">Legal Representation</span>
+            <div className="row">
+              <label htmlFor="phone" className="label">
+                Phone <span className="opt-text">(optional)</span>
               </label>
-              <label className="checkbox-label">
-                <input type="checkbox" name="topics" value="mailing-list" />
-                <span className="checkbox-text">Mailing List</span>
-              </label>
-              <label className="checkbox-label">
-                <input type="checkbox" name="topics" value="pr-media" />
-                <span className="checkbox-text">PR/Media</span>
-              </label>
-              <label className="checkbox-label">
-                <input type="checkbox" name="topics" value="other" />
-                <span className="checkbox-text">Other</span>
-              </label>
+              <div className="input-wrap">
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  className={focused.phone ? "focused" : ""}
+                  onFocus={() => handleFocus("phone")}
+                  onBlur={() => handleBlur("phone")}
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="row">
-            <label htmlFor="message" className="label">
-              Message <span className="req-text">(required)</span>
-            </label>
-            <div className="input-wrap">
-              <textarea 
-                id="message" 
-                name="message" 
-                rows={6} 
-                required 
-                className={focused.message ? 'focused' : ''}
-                onFocus={() => handleFocus('message')}
-                onBlur={() => handleBlur('message')}
-              />
+            <div className="row">
+              <label className="label">
+                Topics <span className="opt-text">(optional)</span>
+              </label>
+              <div className="topics-grid">
+                <label className="checkbox-label">
+                  <input type="checkbox" name="topics" value="legal-representation" />
+                  <span className="checkbox-text">Legal Representation</span>
+                </label>
+                <label className="checkbox-label">
+                  <input type="checkbox" name="topics" value="mailing-list" />
+                  <span className="checkbox-text">Mailing List</span>
+                </label>
+                <label className="checkbox-label">
+                  <input type="checkbox" name="topics" value="pr-media" />
+                  <span className="checkbox-text">PR/Media</span>
+                </label>
+                <label className="checkbox-label">
+                  <input type="checkbox" name="topics" value="other" />
+                  <span className="checkbox-text">Other</span>
+                </label>
+              </div>
             </div>
-          </div>
 
-          {status.msg && (
-            <div className={`status ${status.type === "success" ? "ok" : "err"}`}>
-              {status.msg}
+            <div className="row">
+              <label htmlFor="message" className="label">
+                Message <span className="req-text">(required)</span>
+              </label>
+              <div className="input-wrap">
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={6}
+                  required
+                  className={focused.message ? "focused" : ""}
+                  onFocus={() => handleFocus("message")}
+                  onBlur={() => handleBlur("message")}
+                />
+              </div>
             </div>
-          )}
 
-          <div className="btn-wrap">
-            <button className="btn" type="submit" disabled={loading}>
-              {loading ? "Sending..." : "Send"}
-            </button>
-          </div>
-        </form>
-      </div>
+            {status.msg && (
+              <div className={`status ${status.type === "success" ? "ok" : "err"}`}>{status.msg}</div>
+            )}
+
+            <div className="btn-wrap">
+              <button className="btn" type="submit" disabled={loading}>
+                {loading ? "Sending..." : "Send"}
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
 
       <style jsx>{`
         * { box-sizing: border-box; }
-        
+        :global(html) { scroll-behavior: smooth; }
+
         .wrap {
-          background: #fafbfc;
+          background: #f3f4f6;
           min-height: 100vh;
-          padding: 4rem 1.5rem 6rem;
-          font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
         }
 
-        .container {
-          max-width: 960px;
-          margin: 0 auto;
-        }
+        .container { width: min(960px, 92%); margin: 0 auto; }
 
-        .hdr {
-          text-align: center;
-          margin-bottom: 4rem;
+        /* ===== Hero (matches Services/Careers) ===== */
+        .hero {
+          padding: 64px 0 32px;
+          background: #ffffff;
+          position: relative;
+          overflow: hidden;
         }
+        .hero-content { position: relative; z-index: 1; text-align: center; }
+        .hdr { margin-bottom: 0; }
 
         .title {
-          font-size: 3.5rem;
-          font-weight: 600;
+          font-size: clamp(32px, 5vw, 52px);
+          font-weight: 700;
           color: #0a1628;
-          margin: 0 0 1.5rem;
+          margin: 0 0 12px;
           letter-spacing: -0.02em;
           line-height: 1.1;
+          position: relative;
+          padding-bottom: 16px;
+        }
+
+        .hero-h1 .underline {
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translateX(-50%);
+          height: 5px;
+          background: linear-gradient(90deg, #8B5CF6, #A78BFA, #C4B5FD);
+          border-radius: 3px;
+          box-shadow: 0 2px 8px rgba(139, 92, 246, 0.4);
+          width: 0;
+          opacity: 0;
+        }
+        .hero-h1.is-visible .underline {
+          animation: expandUnderline 2s ease-out forwards;
+        }
+        @keyframes expandUnderline {
+          0%   { width: 0; opacity: 0; }
+          50%  { opacity: 1; }
+          100% { width: 140px; opacity: 1; }
         }
 
         .lead {
@@ -238,18 +289,65 @@ export default function ContactPage() {
           font-weight: 400;
         }
 
-        .form {
-          max-width: 800px;
-          margin: 0 auto;
+        /* ===== Form section with subtle pattern like Services ===== */
+        .form-section {
+          padding: 48px 0 72px;
+          background: #f3f4f6;
+          position: relative;
+          overflow: hidden;
+        }
+        .patterned-section::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background-image:
+            repeating-linear-gradient(
+              90deg,
+              transparent,
+              transparent 60px,
+              rgba(139, 92, 246, 0.04) 60px,
+              rgba(139, 92, 246, 0.04) 61px
+            ),
+            repeating-linear-gradient(
+              0deg,
+              transparent,
+              transparent 60px,
+              rgba(139, 92, 246, 0.04) 60px,
+              rgba(139, 92, 246, 0.04) 61px
+            );
+          pointer-events: none;
+          z-index: 0;
+        }
+        .patterned-section::after {
+          content: '';
+          position: absolute;
+          top: -100%;
+          left: -100%;
+          width: 300%;
+          height: 300%;
+          background:
+            radial-gradient(circle at 30% 50%, rgba(139, 92, 246, 0.12) 0%, transparent 25%),
+            radial-gradient(circle at 70% 50%, rgba(167, 139, 250, 0.10) 0%, transparent 25%),
+            radial-gradient(circle at 50% 80%, rgba(196, 181, 253, 0.08) 0%, transparent 25%);
+          animation: moveGradient 40s linear infinite;
+          pointer-events: none;
+          z-index: 0;
+        }
+        @keyframes moveGradient {
+          0% { transform: translate(0, 0) rotate(0deg); }
+          50% { transform: translate(-10%, -10%) rotate(180deg); }
+          100% { transform: translate(0, 0) rotate(360deg); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .patterned-section::after { animation: none; }
         }
 
-        .hp { 
-          display: none !important; 
-        }
+        /* ===== Form styles (unchanged logic, same look) ===== */
+        .form { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
 
-        .row {
-          margin-bottom: 2.5rem;
-        }
+        .hp { display: none !important; }
+
+        .row { margin-bottom: 2.5rem; }
 
         .label {
           display: block;
@@ -259,18 +357,7 @@ export default function ContactPage() {
           margin-bottom: 0.75rem;
           letter-spacing: -0.01em;
         }
-
-        .req-text {
-          color: #6b7280;
-          font-size: 1rem;
-          font-weight: 400;
-        }
-
-        .opt-text {
-          color: #6b7280;
-          font-size: 1rem;
-          font-weight: 400;
-        }
+        .req-text, .opt-text { color: #6b7280; font-size: 1rem; font-weight: 400; }
 
         .label-row {
           display: grid;
@@ -278,11 +365,8 @@ export default function ContactPage() {
           gap: 1.25rem;
           margin-bottom: 0.5rem;
         }
-
         @media (min-width: 640px) {
-          .label-row { 
-            grid-template-columns: 1fr 1fr; 
-          }
+          .label-row { grid-template-columns: 1fr 1fr; }
         }
 
         .sublabel {
@@ -297,16 +381,11 @@ export default function ContactPage() {
           grid-template-columns: 1fr;
           gap: 1.25rem;
         }
-
         @media (min-width: 640px) {
-          .cols { 
-            grid-template-columns: 1fr 1fr; 
-          }
+          .cols { grid-template-columns: 1fr 1fr; }
         }
 
-        .input-wrap {
-          position: relative;
-        }
+        .input-wrap { position: relative; }
 
         input:not([type="checkbox"]), textarea {
           width: 100%;
@@ -321,11 +400,7 @@ export default function ContactPage() {
           transition: border-color 0.3s ease;
           font-weight: 400;
         }
-
-        input::placeholder, textarea::placeholder {
-          color: transparent;
-        }
-
+        input::placeholder, textarea::placeholder { color: transparent; }
         input.focused, textarea.focused {
           border-bottom-color: #0a1628;
           border-bottom-width: 2px;
@@ -345,11 +420,8 @@ export default function ContactPage() {
           gap: 1rem;
           margin-top: 1rem;
         }
-
         @media (max-width: 639px) {
-          .topics-grid {
-            grid-template-columns: 1fr;
-          }
+          .topics-grid { grid-template-columns: 1fr; }
         }
 
         .checkbox-label {
@@ -359,7 +431,6 @@ export default function ContactPage() {
           cursor: pointer;
           padding: 0.5rem 0;
         }
-
         .checkbox-label input[type="checkbox"] {
           width: 20px;
           height: 20px;
@@ -371,14 +442,12 @@ export default function ContactPage() {
           background: #ffffff;
           transition: all 0.2s ease;
           flex-shrink: 0;
+          position: relative;
         }
-
         .checkbox-label input[type="checkbox"]:checked {
           background: #0a1628;
           border-color: #0a1628;
-          position: relative;
         }
-
         .checkbox-label input[type="checkbox"]:checked::after {
           content: '';
           position: absolute;
@@ -390,17 +459,9 @@ export default function ContactPage() {
           border-width: 0 2px 2px 0;
           transform: rotate(45deg);
         }
+        .checkbox-label:hover input[type="checkbox"] { border-color: #9ca3af; }
 
-        .checkbox-label:hover input[type="checkbox"] {
-          border-color: #9ca3af;
-        }
-
-        .checkbox-text {
-          color: #0a1628;
-          font-size: 1rem;
-          font-weight: 400;
-          user-select: none;
-        }
+        .checkbox-text { color: #0a1628; font-size: 1rem; font-weight: 400; user-select: none; }
 
         .status {
           margin-top: 1.5rem;
@@ -409,22 +470,10 @@ export default function ContactPage() {
           text-align: center;
           border-radius: 8px;
         }
+        .ok  { color: #065f46; background: #d1fae5; }
+        .err { color: #991b1b; background: #fee2e2; }
 
-        .ok { 
-          color: #065f46;
-          background: #d1fae5;
-        }
-
-        .err { 
-          color: #991b1b;
-          background: #fee2e2;
-        }
-
-        .btn-wrap {
-          margin-top: 3rem;
-          text-align: center;
-        }
-
+        .btn-wrap { margin-top: 3rem; text-align: center; }
         .btn {
           display: inline-block;
           padding: 1rem 3rem;
@@ -438,48 +487,24 @@ export default function ContactPage() {
           cursor: pointer;
           transition: all 0.3s ease;
           letter-spacing: 0.02em;
+          box-shadow: 0 4px 12px rgba(10, 22, 40, 0.2);
         }
-
-        .btn:hover:not(:disabled) { 
-          background: #1a2844;
+        .btn:hover:not(:disabled) {
+          background: #1e3a5f;
           transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(10, 22, 40, 0.3);
+          box-shadow: 0 6px 16px rgba(10, 22, 40, 0.3);
         }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .btn:disabled { 
-          opacity: 0.5; 
-          cursor: not-allowed;
-        }
-
+        /* Mobile spacing */
         @media (max-width: 639px) {
-          .wrap {
-            padding: 2.5rem 1.25rem 4rem;
-          }
-
-          .title {
-            font-size: 2.5rem;
-          }
-
-          .lead {
-            font-size: 1rem;
-          }
-
-          .hdr {
-            margin-bottom: 3rem;
-          }
-
-          .row {
-            margin-bottom: 2rem;
-          }
-
-          .label {
-            font-size: 1rem;
-          }
-
-          .btn {
-            width: 100%;
-            padding: 0.875rem 2rem;
-          }
+          .hero { padding: 48px 0 24px; }
+          .form-section { padding: 36px 0 56px; }
+          .title { font-size: 2.5rem; }
+          .lead { font-size: 1rem; }
+          .row { margin-bottom: 2rem; }
+          .label { font-size: 1rem; }
+          .btn { width: 100%; padding: 0.875rem 2rem; }
         }
       `}</style>
     </main>

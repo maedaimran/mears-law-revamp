@@ -415,7 +415,13 @@ export default function Footer() {
         el("span", { className: "strip-text" }, "Want to receive updates from Mears Law?"),
         el(
           "a",
-          { className: "strip-btn", href: "#signup", "aria-label": "Sign up for updates" },
+          {
+            className: "strip-btn",
+            href: "https://mearslaw.kit.com/ea71ad71fe",
+            target: "_blank",
+            rel: "noopener noreferrer",
+            "aria-label": "Sign up for updates"
+          },
           "Sign up ",
           el("span", { className: "arrow" }, "›")
         )

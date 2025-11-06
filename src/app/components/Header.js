@@ -42,14 +42,14 @@ const CSS = `
 .brand-mark-img.small{ width:140px; margin:0; }
 
 /* Primary nav */
-.nav-links{ display:flex; align-items:center; gap:24px; }
+.nav-links{ display:flex; align-items:center; gap:65px; }
 .site-header .nav-links a,
 .site-header .nav-links a:visited{
   font-weight:600; text-decoration:none;
   color:var(--ink-dim);
   display:inline-flex; align-items:center;
   line-height:1.2;
-  padding:2px 2px;
+  padding:12px 8px;
   transition:color .2s ease, opacity .2s ease;
   white-space:nowrap;
 }

@@ -178,7 +178,7 @@ export default function Header() {
     { className: "cta" },
     h(
       Link,
-      { className: "btn btn-primary", href: "#book", "aria-label": "Book consultation" },
+      { className: "btn btn-primary", href: "https://forms.office.com/Pages/ResponsePage.aspx?id=kB-JP2eaikmLL06vvXL6rEEC8YFehKhHkPXO4BVvwlJUQU1aV0w3NVQ5TlFEWFJTVUdTTzVWSFRWMy4u", "aria-label": "Book consultation" },
       "Book Consultation"
     ),
     h(
@@ -228,7 +228,7 @@ export default function Header() {
   const mobileCta = h(
     "div",
     { className: "mobile-cta" },
-    h(Link, { className: "btn", href: "#book", onClick: closeMenu }, "Book Consultation")
+    h(Link, { className: "btn", href: "https://forms.office.com/Pages/ResponsePage.aspx?id=kB-JP2eaikmLL06vvXL6rEEC8YFehKhHkPXO4BVvwlJUQU1aV0w3NVQ5TlFEWFJTVUdTTzVWSFRWMy4u", onClick: closeMenu }, "Book Consultation")
   );
 
   const drawer = h(

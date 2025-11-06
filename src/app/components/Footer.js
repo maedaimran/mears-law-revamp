@@ -455,7 +455,7 @@ export default function Footer() {
         ),
         el(
           Link,
-          { className: "book-btn", href: "/consultation", "aria-label": "Book a consultation" },
+          { className: "book-btn", href: "/book", "aria-label": "Book a consultation" },
           "Book a Consultation",
           el("span", { className: "btn-arrow" }, "→")
         )

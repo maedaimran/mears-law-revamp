@@ -22,49 +22,87 @@ export default function ContactPage() {
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
+async function onSubmit(e) {
+  e.preventDefault();
+  setStatus({ type: "", msg: "" });
+  setLoading(true);
 
-  async function onSubmit(e) {
-    e.preventDefault();
-    setStatus({ type: "", msg: "" });
-    setLoading(true);
+  const formEl = e.currentTarget;          // <-- keep a stable ref to the form
+  const form   = new FormData(formEl);
 
-    const form = new FormData(e.currentTarget);
-    const payload = {
-      firstName: form.get("firstName").trim(),
-      lastName: form.get("lastName").trim(),
-      email: form.get("email").trim(),
-      companyName: form.get("companyName")?.trim() || "",
-      phone: form.get("phone")?.trim() || "",
-      topics: form.getAll("topics"),
-      message: form.get("message").trim(),
-      company: form.get("company") || "", // honeypot
-    };
+  const firstName = (form.get("firstName") || "").trim();
+  const lastName  = (form.get("lastName")  || "").trim();
+  const email     = (form.get("email")     || "").trim();
+  const message   = (form.get("message")   || "").trim();
 
-    if (!payload.firstName || !payload.lastName || !payload.email || !payload.message) {
-      setLoading(false);
-      setStatus({ type: "error", msg: "Please fill in all required fields." });
-      return;
-    }
+  if (!firstName || !lastName || !email || !message) {
+    setLoading(false);
+    setStatus({ type: "error", msg: "Please fill in all required fields." });
+    return;
+  }
 
-    const res = await fetch("/api/contact", {
+  // Honeypot: silently succeed
+  if (form.get("company")) {
+    setLoading(false);
+    formEl.reset();
+    setStatus({ type: "success", msg: "Thanks! (spam filter tripped)" });
+    return;
+  }
+
+  // Topics -> readable comma list
+  const topics = form.getAll("topics");
+  const topicsDisplay = topics.length ? topics.join(", ") : "—";
+  form.delete("topics");
+  form.append("topics", topicsDisplay);
+
+  // Web3Forms required + helpful fields
+  form.append("access_key", "fdb77520-81d8-46ad-8925-aad64b15ad89");
+  form.append("from_name", `${firstName} ${lastName}`);
+  form.append("subject", `${firstName} ${lastName} sent a message from mearslaw.ca`);
+  form.append("replyto", email);
+  form.append("page", "Contact");
+  // form.append("redirect", "https://mearslaw.ca/thank-you"); // optional redirect
+
+  try {
+    const res = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+      body: form,                         // no headers -> no fragile CORS preflight
     });
+
+    // read raw text, then try to parse JSON without throwing
+    let raw = "", data = {};
+    try { raw = await res.text(); data = raw ? JSON.parse(raw) : {}; } catch {}
+
+    // Optional: console log to see exactly what came back during testing
+    // console.log("[Web3Forms]", res.status, data || raw);
 
     setLoading(false);
 
-    if (res.ok) {
-      e.currentTarget.reset();
+    const ok =
+      res.ok &&
+      (data?.success === true ||
+       (typeof data?.message === "string" && data.message.toLowerCase().includes("success")));
+
+    if (ok) {
+      formEl.reset();                     // <-- use the saved form reference
       setStatus({
         type: "success",
         msg: "Thank you for reaching out. We've received your message and will respond within two business days.",
       });
     } else {
-      const data = await res.json().catch(() => ({}));
-      setStatus({ type: "error", msg: data?.error || "Something went wrong. Please try again." });
+      setStatus({
+        type: "error",
+        msg: data?.message || `Something went wrong (HTTP ${res.status}). Please try again.`,
+      });
     }
+  } catch (err) {
+    // Only runs if fetch itself throws (blocked by extension/VPN/etc.)
+    setLoading(false);
+    setStatus({ type: "error", msg: "Network error. Please try again." });
   }
+}
+
+
 
   const handleFocus = (field) => setFocused({ ...focused, [field]: true });
   const handleBlur = (field) => setFocused({ ...focused, [field]: false });

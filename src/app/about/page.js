@@ -40,7 +40,7 @@ export default function AboutPage() {
 
           <blockquote className="pullquote">
             <p>
-              “Legal excellence isn’t just about knowing the law — it’s about understanding how legal
+              “Legal excellence isn’t just about knowing the law—it’s about understanding how legal
               strategy serves broader business and personal objectives. Every client deserves counsel
               that’s both technically expert and strategically minded.”
             </p>
@@ -76,7 +76,7 @@ export default function AboutPage() {
               We serve corporations, government entities, and individuals, offering comprehensive
               legal support that is both client-centered and forward-looking. From corporate
               transactions and real estate matters to regulatory compliance, dispute resolution, and
-              emerging areas like AI and data protection — we provide legal services designed to
+              emerging areas like AI and data protection—we provide legal services designed to
               empower our clients in an evolving legal landscape.
             </p>
 
@@ -405,6 +405,49 @@ export default function AboutPage() {
         }
         .prose p + p { margin-top: 14px; }
         .prose .closing { margin-top: 18px; }
+        /* === Hover/animation: How We Help containers (blue highlight, no arrow) === */
+.help-card {
+  transition: box-shadow 300ms ease, transform 300ms ease, border-color 300ms ease;
+  will-change: transform;
+}
+.help-card:hover {
+  transform: translateY(-3px);
+  border-color: #3b82f6;
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+}
+
+.help-list li {
+  transition: background-color 250ms ease, box-shadow 250ms ease, transform 250ms ease, border-color 250ms ease;
+  will-change: transform;
+}
+.help-list li:hover,
+.help-list li:focus-within {
+  background-color: #eff6ff; /* light blue */
+  border-color: #bfdbfe; /* soft blue border */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.15);
+}
+
+/* === Hover/animation: Our Commitment bubbles === */
+.commitment .pill {
+  transition: transform 260ms ease, box-shadow 260ms ease, border-color 260ms ease;
+  will-change: transform;
+}
+.commitment .pill:hover,
+.commitment .pill:focus-within {
+  transform: translateY(-4px) scale(1.02);
+  border-color: #3b82f6;
+  box-shadow: 0 16px 30px rgba(59, 130, 246, 0.18);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .help-card,
+  .help-list li,
+  .commitment .pill {
+    transition: none;
+  }
+}
 
         .help { position: relative; }
         .help-card {
@@ -532,6 +575,7 @@ export default function AboutPage() {
         }
         @media (max-width: 560px) {
           .pill-grid { grid-template-columns: 1fr; }
+          
         }
       `}</style>
     </>

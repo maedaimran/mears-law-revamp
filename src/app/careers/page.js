@@ -136,10 +136,10 @@ export default function CareersPage() {
           </p>
           
         <div className="apply-action">
-          <a 
-            href="https://forms.office.com/Pages/ResponsePage.aspx?id=kB-JP2eaikmLL06vvXL6rEEC8YFehKhHkPXO4BVvwlJUQjlPNTlYSjZZU1YwMzVQQzBCVVNNVzhXNS4u" 
-            className="apply-button" 
-            target="_blank" 
+          <a
+            href="https://form.jotform.com/253146433046048"
+            className="apply-button"
+            target="_blank"
             rel="noopener noreferrer"
           >
             <span>Complete Application Form</span>

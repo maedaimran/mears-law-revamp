@@ -7,8 +7,8 @@ const AREAS = [
   { title: "Artifcial Intelligence" , href: "/services#ai-adoption" },
   { title: "Corporate", href: "/services#corporate-law" },
   { title: "Immigration", href: "/services#immigration-law" },
-  { title: "Privacy and Data Protection", href: "/services#privacy-and-data-protection" },
-  { title: "Real Estate", href: "/services#real-estate" },
+  { title: "Privacy and Data Protection", href: "/services#privacy-data-protection" },
+  { title: "Real Estate", href: "/services#real-estate-law" },
 ];
 
 export default function PracticeAreas() {

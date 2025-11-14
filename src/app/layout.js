@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import CookieNotice from "./components/CookieNotice";
 import Script from "next/script";
+import { Suspense } from "react";
 import GAListener from "./GAListener";
 
 const inter = Inter({
@@ -164,7 +165,9 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <Header />
-        <GAListener />
+        <Suspense fallback={null}>
+          <GAListener />
+        </Suspense>
         {children}
         <Footer />
         <CookieNotice />

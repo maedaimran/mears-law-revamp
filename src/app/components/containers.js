@@ -5,8 +5,8 @@ import styles from "./containers.module.css";
 
 const AREAS = [
   { title: "Artifcial Intelligence" , href: "/services#ai-adoption" },
-  { title: "Corporate Law", href: "/services#corporate-law" },
-  { title: "Immigration Law", href: "/services#immigration-law" },
+  { title: "Corporate", href: "/services#corporate-law" },
+  { title: "Immigration", href: "/services#immigration-law" },
   { title: "Privacy and Data Protection", href: "/services#privacy-and-data-protection" },
   { title: "Real Estate", href: "/services#real-estate" },
 ];

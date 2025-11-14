@@ -481,14 +481,14 @@ export default function Footer() {
             "div",
             { className: "contact-info" },
             el(
-              Link,
-              { className: "contact-link", href: "/contact" },
-              "Contact Us"
-            ),
-            el(
               "a",
               { className: "contact-link", href: "mailto:info@mearslaw.ca" },
-              "info@mearslaw.ca"
+              "Email"
+            ),
+            el(
+              Link,
+              { className: "contact-link", href: "/contact" },
+              "Leave us a message"
             ),
             el(
               Link,

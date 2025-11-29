@@ -1255,6 +1255,11 @@ export default function Footer() {
             { className: "contact-info" },
             el(
               "a",
+              { className: "contact-link", href: "https://form.jotform.com/253145514050244" },
+              "Get Started"
+            ),
+            el(
+              "a",
               { className: "contact-link", href: "mailto:info@mearslaw.ca" },
               "Email"
             ),

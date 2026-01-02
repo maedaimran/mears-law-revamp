@@ -1070,6 +1070,80 @@ const CSS = `
   outline:2px solid rgba(234,242,255,.35); outline-offset:3px; border-radius:6px;
 }
 
+/* Services Dropdown */
+.services-dropdown {
+  position: relative;
+}
+
+.services-trigger {
+  background: none;
+  border: none;
+  color: var(--ink-dim);
+  font-weight: 600;
+  font-size: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 0;
+  transition: color .2s ease;
+  white-space: nowrap;
+}
+
+.services-trigger:hover {
+  color: var(--ink);
+}
+
+.services-trigger svg {
+  width: 14px;
+  height: 14px;
+  transition: transform .2s ease;
+}
+
+.services-dropdown.open .services-trigger svg {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 8px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+  min-width: 180px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity .2s ease, transform .2s ease, visibility .2s ease;
+  z-index: 100;
+  padding: 8px 0;
+  border: 1px solid rgba(0,0,0,.08);
+}
+
+.services-dropdown.open .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  display: block;
+  padding: 10px 20px;
+  color: #0A1628;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 15px;
+  transition: background .2s ease, color .2s ease;
+}
+
+.dropdown-item:hover {
+  background: #f3f4f6;
+  color: #1E3A5F;
+}
+
 /* CTA */
 .cta{ display:flex; align-items:center; gap:10px; }
 .btn{
@@ -1123,6 +1197,8 @@ const CSS = `
 .mobile-links{ display:flex; flex-direction:column; padding:12px 14px; gap:14px; }
 .mobile-links a{ color:#fff; text-decoration:none; font-weight:600; line-height:1.25; }
 .mobile-links a:hover{ opacity:.9; }
+.mobile-submenu{ display:flex; flex-direction:column; padding-left:20px; gap:10px; margin-top:8px; }
+.mobile-submenu a{ color:rgba(255,255,255,0.85); font-weight:500; font-size:14px; }
 .mobile-cta{ display:flex; flex-direction:column; gap:10px; padding:8px 14px 16px; }
 .mobile-cta .btn{ background:#fff; color:var(--navy); }
 .close{ border:0; background:none; color:#fff; padding:6px; }
@@ -1244,6 +1320,13 @@ const IconClose = () =>
     h("path", { d: "M18 6L6 18M6 6l12 12" })
   );
 
+const IconChevronDown = () =>
+  h(
+    "svg",
+    { width: 14, height: 14, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": "true" },
+    h("path", { d: "M6 9l6 6 6-6" })
+  );
+
 /* ---------- component (no JSX) ---------- */
 export default function Header() {
   useInlineStyles("ml-header-inline-css", CSS);
@@ -1251,9 +1334,12 @@ export default function Header() {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isCalendlyOpen, setIsCalendlyOpen] = useState(false);
+  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   
   const toggleMenu = useCallback(() => setIsOpen((v) => !v), []);
   const closeMenu = useCallback(() => setIsOpen(false), []);
+  const toggleServicesDropdown = useCallback(() => setIsServicesDropdownOpen((v) => !v), []);
+  const closeServicesDropdown = useCallback(() => setIsServicesDropdownOpen(false), []);
   
   const openCalendly = useCallback((e) => {
     e.preventDefault();
@@ -1284,6 +1370,20 @@ export default function Header() {
     };
   }, [isCalendlyOpen, closeCalendly]);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    if (!isServicesDropdownOpen) return;
+    
+    const handleClickOutside = (e) => {
+      if (!e.target.closest('.services-dropdown')) {
+        closeServicesDropdown();
+      }
+    };
+    
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isServicesDropdownOpen, closeServicesDropdown]);
+
   /* brand */
   const brandLink = h(
     Link,
@@ -1292,12 +1392,52 @@ export default function Header() {
   );
 
   /* desktop primary nav */
+  const servicesDropdown = h(
+    "div",
+    { className: `services-dropdown${isServicesDropdownOpen ? " open" : ""}` },
+    h(
+      "button",
+      {
+        className: "services-trigger",
+        onClick: toggleServicesDropdown,
+        "aria-expanded": isServicesDropdownOpen,
+        "aria-haspopup": "true"
+      },
+      "Services",
+      h(IconChevronDown)
+    ),
+    h(
+      "div",
+      { className: "dropdown-menu", role: "menu" },
+      h(
+        Link,
+        {
+          href: "/services#legal-services",
+          className: "dropdown-item",
+          role: "menuitem",
+          onClick: closeServicesDropdown
+        },
+        "Legal"
+      ),
+      h(
+        Link,
+        {
+          href: "/services#consulting-services",
+          className: "dropdown-item",
+          role: "menuitem",
+          onClick: closeServicesDropdown
+        },
+        "Consulting"
+      )
+    )
+  );
+
   const navLinks = h(
     "nav",
     { className: "nav-links", "aria-label": "Primary" },
     h(Link, { href: "/" }, "Home"),
     h(Link, { href: "/about" }, "About"),
-    h(Link, { href: "/services" }, "Services"),
+    servicesDropdown,
     h(Link, { href: "/careers" }, "Careers"),
     h(Link, { href: "/contact" }, "Contact")
   );
@@ -1353,7 +1493,17 @@ export default function Header() {
     { className: "mobile-links", "aria-label": "Mobile" },
     h(Link, { href: "/", onClick: closeMenu }, "Home"),
     h(Link, { href: "/about", onClick: closeMenu }, "About"),
-    h(Link, { href: "/services", onClick: closeMenu }, "Services"),
+    h(
+      "div",
+      null,
+      h("div", { style: { fontWeight: 600, color: "#fff", marginBottom: "8px" } }, "Services"),
+      h(
+        "div",
+        { className: "mobile-submenu" },
+        h(Link, { href: "/services#legal-services", onClick: closeMenu }, "Legal"),
+        h(Link, { href: "/services#consulting-services", onClick: closeMenu }, "Consulting")
+      )
+    ),
     h(Link, { href: "/careers", onClick: closeMenu }, "Careers"),
     h(Link, { href: "/contact", onClick: closeMenu }, "Contact")
   );

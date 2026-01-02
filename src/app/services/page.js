@@ -146,10 +146,10 @@ function ServiceCard({ title, blurb, challenges, services, clients, id }) {
 }
 
 export default function ServicesPage() {
-  const sections = [
+  const legalServices = [
     {
       id: "ai-regulation",
-      title: "Artificial Intelligence Regulation & Ethical Adoption",
+      title: "Artificial Intelligence",
       blurb:
         "Businesses are eager to leverage AI but often face uncertainty about where to start, how to comply with regulations, and how to adopt AI responsibly. At Mears Law, we provide practical, strategic, and legal solutions to help you implement AI confidently and ethically.",
       challenges: [
@@ -168,8 +168,28 @@ export default function ServicesPage() {
       ],
     },
     {
+      id: "privacy-data-protection",
+      title: "Privacy and Data Protection",
+      blurb:
+        "In today's data-driven world, protecting personal and business information is not just a legal requirement—it's a cornerstone of trust. At Mears Law, we help organizations navigate complex privacy laws and implement robust data protection strategies that safeguard your reputation and minimize risk.",
+      challenges: [
+        "Uncertainty About Compliance: Businesses struggle to interpret privacy regulations like PIPEDA and GDPR",
+        "Data Breach Risks: Concerns about security vulnerabilities and liability exposure",
+        "Cross-Border Data Transfers: Complexities in handling international data flows",
+        "Operational Integration: Difficulty embedding privacy practices into operations",
+      ],
+      services: [
+        "Privacy Compliance Programs",
+        "Policy & Procedure Development",
+        "Outsourced Privacy Officer",
+        "Data Governance & Risk Management",
+        "Breach Response & Litigation",
+        "Training & Advisory",
+      ],
+    },
+    {
       id: "corporate-law",
-      title: "Corporate Law",
+      title: "Corporate",
       blurb:
         "Strong legal foundations are essential for business success. At Mears Law, we help entrepreneurs, corporations, and investors navigate corporate law with clarity and confidence—whether you're starting a business, managing growth, or raising capital.",
       challenges: [
@@ -190,8 +210,27 @@ export default function ServicesPage() {
       ],
     },
     {
+      id: "real-estate-law",
+      title: "Real Estate",
+      blurb:
+        "Real estate transactions are significant investments that require precision and legal expertise. At Mears Law, we guide clients through every stage of residential and commercial property deals—ensuring smooth transactions, compliance, and protection of your interests.",
+      challenges: [
+        "Complex Contracts: Buyers and sellers struggle with understanding legal terms",
+        "Risk of Title Issues: Concerns about liens, encumbrances, or ownership disputes",
+        "Financing & Closing Delays: Missed deadlines or incomplete documentation can derail deals",
+        "Commercial Lease Negotiations: Businesses face challenges securing favorable terms",
+      ],
+      services: [
+        "Residential Real Estate",
+        "Commercial Real Estate",
+        "Real Estate Financing",
+        "Risk Management & Dispute Resolution",
+        "Ongoing Advisory",
+      ],
+    },
+    {
       id: "immigration-law",
-      title: "Immigration Law",
+      title: "Immigration",
       blurb:
         "Navigating Canada's immigration system can be complex and overwhelming. Whether you're an individual seeking permanent residency or a business hiring global talent, Mears Law provides strategic, efficient, and compliant solutions to help you achieve your immigration goals.",
       challenges: [
@@ -209,43 +248,47 @@ export default function ServicesPage() {
         "Ongoing Advisory",
       ],
     },
+  ];
+
+  const consultingServices = [
     {
-      id: "privacy-data-protection",
-      title: "Privacy & Data Protection",
+      id: "ai-governance",
+      title: "Artificial Intelligence Governance",
       blurb:
-        "In today's data-driven world, protecting personal and business information is not just a legal requirement—it's a cornerstone of trust. At Mears Law, we help organizations navigate complex privacy laws and implement robust data protection strategies that safeguard your reputation and minimize risk.",
+        "Effective AI governance requires strategic oversight and comprehensive frameworks. At Mears Law, we provide consulting services to help organizations establish robust AI governance structures, ensuring ethical adoption, regulatory compliance, and sustainable AI implementation.",
       challenges: [
-        "Uncertainty About Compliance: Businesses struggle to interpret privacy regulations like PIPEDA and GDPR",
-        "Data Breach Risks: Concerns about security vulnerabilities and liability exposure",
-        "Cross-Border Data Transfers: Complexities in handling international data flows",
-        "Operational Integration: Difficulty embedding privacy practices into operations",
+        "Establishing Governance Frameworks",
+        "Ensuring Ethical AI Practices",
+        "Regulatory Compliance",
+        "Risk Management & Oversight",
       ],
       services: [
-        "Privacy Compliance Programs",
-        "Policy & Procedure Development",
-        "Outsourced Privacy Officer",
-        "Data Governance & Risk Management",
-        "Breach Response & Litigation",
-        "Training & Advisory",
+        "AI Governance Strategy Development",
+        "Ethical AI Framework Implementation",
+        "Regulatory Compliance Consulting",
+        "Risk Assessment & Mitigation",
+        "Policy Development & Training",
+        "Ongoing Governance Advisory",
       ],
     },
     {
-      id: "real-estate-law",
-      title: "Real Estate Law",
+      id: "privacy-compliance",
+      title: "Privacy and Data Protection Compliance",
       blurb:
-        "Real estate transactions are significant investments that require precision and legal expertise. At Mears Law, we guide clients through every stage of residential and commercial property deals—ensuring smooth transactions, compliance, and protection of your interests.",
+        "Maintaining privacy compliance in an evolving regulatory landscape requires expert guidance and proactive strategies. At Mears Law, we offer consulting services to help organizations build and maintain comprehensive privacy compliance programs that protect both data and reputation.",
       challenges: [
-        "Complex Contracts: Buyers and sellers struggle with understanding legal terms",
-        "Risk of Title Issues: Concerns about liens, encumbrances, or ownership disputes",
-        "Financing & Closing Delays: Missed deadlines or incomplete documentation can derail deals",
-        "Commercial Lease Negotiations: Businesses face challenges securing favorable terms",
+        "Navigating Complex Regulations",
+        "Building Compliance Programs",
+        "Maintaining Ongoing Compliance",
+        "Managing Cross-Border Requirements",
       ],
       services: [
-        "Residential Real Estate",
-        "Commercial Real Estate",
-        "Real Estate Financing",
-        "Risk Management & Dispute Resolution",
-        "Ongoing Advisory",
+        "Compliance Program Development",
+        "Privacy Impact Assessments",
+        "Regulatory Gap Analysis",
+        "Compliance Audits & Reviews",
+        "Training & Awareness Programs",
+        "Ongoing Compliance Advisory",
       ],
     },
   ];
@@ -266,10 +309,25 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* SERVICES (centered container) */}
-      <section className="section">
+      {/* LEGAL SERVICES */}
+      <section className="section" id="legal-services">
         <div className="container stack">
-          {sections.map((s, i) => (
+          <div className="section-header">
+            <h2 className="section-title">Legal Services</h2>
+          </div>
+          {legalServices.map((s, i) => (
+            <ServiceCard key={i} {...s} />
+          ))}
+        </div>
+      </section>
+
+      {/* CONSULTING SERVICES */}
+      <section className="section" id="consulting-services">
+        <div className="container stack">
+          <div className="section-header">
+            <h2 className="section-title">Consulting Services</h2>
+          </div>
+          {consultingServices.map((s, i) => (
             <ServiceCard key={i} {...s} />
           ))}
         </div>
@@ -360,6 +418,7 @@ export default function ServicesPage() {
           background:#f3f4f6;
           position: relative;
           overflow: hidden;
+          scroll-margin-top: 120px;
         }
 
         .section::before {
@@ -431,6 +490,26 @@ export default function ServicesPage() {
         
         @media (max-width:720px){ 
           .stack{ gap:36px; } 
+        }
+
+        .section-header {
+          margin-bottom: 24px;
+        }
+
+        .section-title {
+          font-size: 36px;
+          line-height: 1.2;
+          color: #0A1628;
+          font-weight: 700;
+          margin: 0;
+          padding-bottom: 12px;
+          border-bottom: 2px solid #E5E7EB;
+        }
+
+        @media (max-width:720px) {
+          .section-title {
+            font-size: 28px;
+          }
         }
       `}</style>
     </main>

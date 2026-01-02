@@ -108,8 +108,8 @@ export default function OurValues() {
           <span className="values-label">OUR VALUES</span>
           <h2 className="values-title">What Drives Us</h2>
           <p className="values-intro">
-            At Mears Law, we provide comprehensive legal services tailored to the needs of 
-            corporations, government entities, and individuals. Our team combines legal insight 
+            At Mears Law, we provide comprehensive legal and consulting services tailored to the needs of 
+            corporations, government entities, and individuals. Our team combines legal and compliance insight 
             with practical solutions to help clients navigate complex challenges with confidence.
           </p>
         </div>

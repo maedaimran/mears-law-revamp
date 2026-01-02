@@ -1192,8 +1192,8 @@ export default function Footer() {
         el(
           "div",
           { className: "book-content" },
-          el("div", { className: "book-title" }, "Ready to Discuss Your Legal Matter?"),
-          el("div", { className: "book-subtitle" }, "Schedule a consultation with our experienced legal team")
+          el("div", { className: "book-title" }, "Ready to Discuss Your Matter?"),
+          el("div", { className: "book-subtitle" }, "Schedule a consultation with our experienced team")
         ),
         el(
           "button",

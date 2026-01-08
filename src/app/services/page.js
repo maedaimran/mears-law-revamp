@@ -1,298 +1,7 @@
 "use client";
-import { useEffect, useRef } from "react";
-
-
-const CheckIcon = () => (
-  <svg
-    width="18" height="18" viewBox="0 0 24 24" fill="none"
-    stroke="#1E3A5F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-    className="icon" aria-hidden="true"
-  >
-    <circle cx="12" cy="12" r="9" />
-    <path d="M8 12l2.5 2.5L16 9" />
-    <style jsx>{`.icon{margin-top:4px;flex:0 0 auto;}`}</style>
-  </svg>
-);
-
-function ServiceCard({ title, blurb, challenges, services, clients, id }) {
-  return (
-    <article className="service" id={id}>
-      <header className="svc-head">
-        <h2 className="h2">{title}</h2>
-        <p className="blurb">{blurb}</p>
-      </header>
-
-      <div className="bubble">
-        <div className="bubble-col">
-          <div className="bubble-title">Key Challenges We Solve</div>
-          <ul className="list">
-            {challenges.map((item, i) => (
-              <li className="list-item" key={i}>
-                <CheckIcon />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="bubble-divider"></div>
-
-        <div className="bubble-col">
-          <div className="bubble-title">Our Services</div>
-          <ul className="list services-list">
-            {services.map((service, i) => (
-              <li className="list-item" key={i}>
-                <span>{service.name || service}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      <style jsx>{`
-        .service{ 
-          opacity:1; 
-          scroll-margin-top: 120px;
-        }
-        
-        .svc-head{ margin-bottom:20px; }
-        .h2{ 
-          font-size:32px; 
-          line-height:1.2; 
-          color:#0A1628; 
-          font-weight:600; 
-          margin:0 0 8px; 
-        }
-        .blurb{ 
-          color:#374151; 
-          margin:0; 
-          line-height:1.7; 
-          font-size:16px;
-        }
-        @media (max-width:720px){ 
-          .h2{ font-size:26px; } 
-        }
-
-        .bubble{
-          margin-top:20px;
-          border-radius:12px;
-          border:1px solid #E5E7EB;
-          box-shadow:0 2px 8px rgba(10,22,40,.06);
-          padding:32px;
-          display:grid;
-          grid-template-columns:1fr;
-          gap:32px;
-          background:#FFFFFF;
-          position:relative;
-        }
-        
-        @media (min-width:860px){ 
-          .bubble{ 
-            grid-template-columns:1fr auto 1fr;
-            gap:40px;
-          } 
-        }
-
-        .bubble-divider{
-          display:none;
-        }
-        
-        @media (min-width:860px){
-          .bubble-divider{
-            display:block;
-            width:1px;
-            background:linear-gradient(
-              to bottom,
-              transparent 0%,
-              #E5E7EB 10%,
-              #E5E7EB 90%,
-              transparent 100%
-            );
-          }
-        }
-
-        .bubble-title{ 
-          font-size:16px; 
-          font-weight:700; 
-          color:#0A1628; 
-          margin-bottom:16px;
-          text-transform:uppercase;
-          letter-spacing:0.5px;
-        }
-        
-        .list{ 
-          list-style:none; 
-          padding:0; 
-          margin:0; 
-          display:grid; 
-          gap:12px; 
-        }
-        
-        .list-item{ 
-          display:flex; 
-          align-items:flex-start; 
-          gap:10px; 
-          color:#374151;
-          font-size:15px;
-          line-height:1.6;
-        }
-
-        .services-list .list-item {
-          font-weight:400;
-        }
-      `}</style>
-    </article>
-  );
-}
+import Link from "next/link";
 
 export default function ServicesPage() {
-  const legalServices = [
-    {
-      id: "ai-regulation",
-      title: "Artificial Intelligence",
-      blurb:
-        "Businesses are eager to leverage AI but often face uncertainty about where to start, how to comply with regulations, and how to adopt AI responsibly. At Mears Law, we provide practical, strategic, and legal solutions to help you implement AI confidently and ethically.",
-      challenges: [
-        "Uncertainty About AI Laws",
-        "Lack of Internal Expertise",
-        "Risk of Ethical Missteps",
-        "Operational Integration",
-      ],
-      services: [
-        { name: "AI Readiness & Strategy" },
-        { name: "Regulatory & Governance Frameworks" },
-        { name: "Outsourced AI Officer" },
-        { name: "Contract & Vendor Management" },
-        { name: "Risk Mitigation & Dispute Resolution" },
-        { name: "Training & Advisory" },
-      ],
-    },
-    {
-      id: "privacy-data-protection",
-      title: "Privacy and Data Protection",
-      blurb:
-        "In today's data-driven world, protecting personal and business information is not just a legal requirement—it's a cornerstone of trust. At Mears Law, we help organizations navigate complex privacy laws and implement robust data protection strategies that safeguard your reputation and minimize risk.",
-      challenges: [
-        "Uncertainty About Compliance: Businesses struggle to interpret privacy regulations like PIPEDA and GDPR",
-        "Data Breach Risks: Concerns about security vulnerabilities and liability exposure",
-        "Cross-Border Data Transfers: Complexities in handling international data flows",
-        "Operational Integration: Difficulty embedding privacy practices into operations",
-      ],
-      services: [
-        "Privacy Compliance Programs",
-        "Policy & Procedure Development",
-        "Outsourced Privacy Officer",
-        "Data Governance & Risk Management",
-        "Breach Response & Litigation",
-        "Training & Advisory",
-      ],
-    },
-    {
-      id: "corporate-law",
-      title: "Corporate",
-      blurb:
-        "Strong legal foundations are essential for business success. At Mears Law, we help entrepreneurs, corporations, and investors navigate corporate law with clarity and confidence—whether you're starting a business, managing growth, or raising capital.",
-      challenges: [
-        "Starting a Business: Confusion around incorporation and governance",
-        "Managing Risk: Uncertainty about compliance and liability",
-        "Complex Transactions: Difficulty structuring deals and agreements",
-        "Raising Capital: Navigating securities laws and investor agreements",
-        "Scaling Operations: Need for frameworks that support expansion",
-      ],
-      services: [
-        "Business Formation & Structuring",
-        "Corporate Governance & Compliance",
-        "Mergers & Acquisitions",
-        "Raising Capital",
-        "Commercial Contracts",
-        "Corporate Restructuring",
-        "Ongoing Advisory",
-      ],
-    },
-    {
-      id: "real-estate-law",
-      title: "Real Estate",
-      blurb:
-        "Real estate transactions are significant investments that require precision and legal expertise. At Mears Law, we guide clients through every stage of residential and commercial property deals—ensuring smooth transactions, compliance, and protection of your interests.",
-      challenges: [
-        "Complex Contracts: Buyers and sellers struggle with understanding legal terms",
-        "Risk of Title Issues: Concerns about liens, encumbrances, or ownership disputes",
-        "Financing & Closing Delays: Missed deadlines or incomplete documentation can derail deals",
-        "Commercial Lease Negotiations: Businesses face challenges securing favorable terms",
-      ],
-      services: [
-        "Residential Real Estate",
-        "Commercial Real Estate",
-        "Real Estate Financing",
-        "Risk Management & Dispute Resolution",
-        "Ongoing Advisory",
-      ],
-    },
-    {
-      id: "immigration-law",
-      title: "Immigration",
-      blurb:
-        "Navigating Canada's immigration system can be complex and overwhelming. Whether you're an individual seeking permanent residency or a business hiring global talent, Mears Law provides strategic, efficient, and compliant solutions to help you achieve your immigration goals.",
-      challenges: [
-        "Confusing Application Processes: Clients struggle with forms, documentation, and eligibility",
-        "Delays & Compliance Risks: Missed deadlines or incomplete applications lead to costly delays",
-        "Employer Obligations: Challenges meeting compliance standards when hiring foreign workers",
-        "Changing Regulations: Immigration laws evolve quickly, creating uncertainty",
-      ],
-      services: [
-        "Permanent Residency & Citizenship",
-        "Work Permits & Employer Compliance",
-        "Study Permits & International Students",
-        "Business Immigration",
-        "Appeals & Dispute Resolution",
-        "Ongoing Advisory",
-      ],
-    },
-  ];
-
-  const consultingServices = [
-    {
-      id: "ai-governance",
-      title: "Artificial Intelligence Governance",
-      blurb:
-        "Effective AI governance requires strategic oversight and comprehensive frameworks. At Mears Law, we provide consulting services to help organizations establish robust AI governance structures, ensuring ethical adoption, regulatory compliance, and sustainable AI implementation.",
-      challenges: [
-        "Establishing Governance Frameworks",
-        "Ensuring Ethical AI Practices",
-        "Regulatory Compliance",
-        "Risk Management & Oversight",
-      ],
-      services: [
-        "AI Governance Strategy Development",
-        "Ethical AI Framework Implementation",
-        "Regulatory Compliance Consulting",
-        "Risk Assessment & Mitigation",
-        "Policy Development & Training",
-        "Ongoing Governance Advisory",
-      ],
-    },
-    {
-      id: "privacy-compliance",
-      title: "Privacy and Data Protection Compliance",
-      blurb:
-        "Maintaining privacy compliance in an evolving regulatory landscape requires expert guidance and proactive strategies. At Mears Law, we offer consulting services to help organizations build and maintain comprehensive privacy compliance programs that protect both data and reputation.",
-      challenges: [
-        "Navigating Complex Regulations",
-        "Building Compliance Programs",
-        "Maintaining Ongoing Compliance",
-        "Managing Cross-Border Requirements",
-      ],
-      services: [
-        "Compliance Program Development",
-        "Privacy Impact Assessments",
-        "Regulatory Gap Analysis",
-        "Compliance Audits & Reviews",
-        "Training & Awareness Programs",
-        "Ongoing Compliance Advisory",
-      ],
-    },
-  ];
-
   return (
     <main className="page">
       {/* HERO */}
@@ -309,27 +18,36 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* LEGAL SERVICES */}
-      <section className="section" id="legal-services">
-        <div className="container stack">
-          <div className="section-header">
-            <h2 className="section-title">Legal Services</h2>
-          </div>
-          {legalServices.map((s, i) => (
-            <ServiceCard key={i} {...s} />
-          ))}
-        </div>
-      </section>
+      {/* SERVICE CARDS */}
+      <section className="section">
+        <div className="container services-grid">
+          <Link href="/legal" className="service-card">
+            <div className="card-content">
+              <h2 className="card-title">Legal Services</h2>
+              <p className="card-description">
+                Comprehensive legal services including AI Regulation, Corporate Law, Immigration Law,
+                Real Estate Law, and Privacy Law. Expert legal counsel to help you navigate complex
+                legal challenges with confidence.
+              </p>
+              <div className="card-footer">
+                <span className="card-link">Explore Legal Services →</span>
+              </div>
+            </div>
+          </Link>
 
-      {/* CONSULTING SERVICES */}
-      <section className="section" id="consulting-services">
-        <div className="container stack">
-          <div className="section-header">
-            <h2 className="section-title">Consulting Services</h2>
-          </div>
-          {consultingServices.map((s, i) => (
-            <ServiceCard key={i} {...s} />
-          ))}
+          <Link href="/consulting" className="service-card">
+            <div className="card-content">
+              <h2 className="card-title">Consulting Services</h2>
+              <p className="card-description">
+                Strategic consulting services for AI Governance and Privacy Compliance. We help
+                organizations establish robust governance structures and maintain compliance through
+                expert guidance and comprehensive frameworks.
+              </p>
+              <div className="card-footer">
+                <span className="card-link">Explore Consulting Services →</span>
+              </div>
+            </div>
+          </Link>
         </div>
       </section>
 
@@ -414,11 +132,10 @@ export default function ServicesPage() {
         }
 
         .section{ 
-          padding:48px 0 64px;
+          padding:64px 0;
           background:#f3f4f6;
           position: relative;
           overflow: hidden;
-          scroll-margin-top: 120px;
         }
 
         .section::before {
@@ -481,34 +198,108 @@ export default function ServicesPage() {
           }
         }
 
-        .stack{ 
-          display:grid; 
-          gap:48px; 
+        .services-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 32px;
           position: relative;
           z-index: 1;
         }
-        
-        @media (max-width:720px){ 
-          .stack{ gap:36px; } 
+
+        @media (min-width: 768px) {
+          .services-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+          }
         }
 
-        .section-header {
-          margin-bottom: 24px;
+        .service-card {
+          background: #FFFFFF;
+          border-radius: 16px;
+          border: 1px solid #E5E7EB;
+          box-shadow: 0 4px 12px rgba(10, 22, 40, 0.08);
+          padding: 40px;
+          text-decoration: none;
+          color: inherit;
+          transition: all 0.3s ease;
+          display: block;
+          position: relative;
+          overflow: hidden;
         }
 
-        .section-title {
-          font-size: 36px;
+        .service-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background: linear-gradient(90deg, #8B5CF6, #A78BFA, #C4B5FD);
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 24px rgba(10, 22, 40, 0.12);
+          border-color: #8B5CF6;
+        }
+
+        .service-card:hover::before {
+          transform: scaleX(1);
+        }
+
+        .card-content {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        .card-title {
+          font-size: 32px;
           line-height: 1.2;
           color: #0A1628;
           font-weight: 700;
           margin: 0;
-          padding-bottom: 12px;
-          border-bottom: 2px solid #E5E7EB;
         }
 
-        @media (max-width:720px) {
-          .section-title {
+        .card-description {
+          font-size: 16px;
+          line-height: 1.7;
+          color: #374151;
+          margin: 0;
+          flex: 1;
+        }
+
+        .card-footer {
+          margin-top: 8px;
+        }
+
+        .card-link {
+          font-size: 16px;
+          font-weight: 600;
+          color: #8B5CF6;
+          display: inline-flex;
+          align-items: center;
+          transition: transform 0.2s ease;
+        }
+
+        .service-card:hover .card-link {
+          transform: translateX(4px);
+        }
+
+        @media (max-width: 720px) {
+          .service-card {
+            padding: 32px 24px;
+          }
+
+          .card-title {
             font-size: 28px;
+          }
+
+          .card-description {
+            font-size: 15px;
           }
         }
       `}</style>

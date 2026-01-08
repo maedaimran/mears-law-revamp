@@ -1129,19 +1129,24 @@ const CSS = `
   transform: translateY(0);
 }
 
-.dropdown-item {
+.services-dropdown .dropdown-menu .dropdown-item,
+.services-dropdown .dropdown-menu .dropdown-item:visited,
+.services-dropdown .dropdown-menu .dropdown-item:active,
+.services-dropdown .dropdown-menu .dropdown-item:link {
   display: block;
   padding: 10px 20px;
-  color: #0A1628;
-  text-decoration: none;
-  font-weight: 500;
+  color: #000000 !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
   font-size: 15px;
   transition: background .2s ease, color .2s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.dropdown-item:hover {
+.services-dropdown .dropdown-menu .dropdown-item:hover {
   background: #f3f4f6;
-  color: #1E3A5F;
+  color: #0A1628 !important;
 }
 
 /* CTA */
@@ -1412,7 +1417,7 @@ export default function Header() {
       h(
         Link,
         {
-          href: "/services#legal-services",
+          href: "/legal",
           className: "dropdown-item",
           role: "menuitem",
           onClick: closeServicesDropdown
@@ -1422,7 +1427,7 @@ export default function Header() {
       h(
         Link,
         {
-          href: "/services#consulting-services",
+          href: "/consulting",
           className: "dropdown-item",
           role: "menuitem",
           onClick: closeServicesDropdown
@@ -1500,8 +1505,8 @@ export default function Header() {
       h(
         "div",
         { className: "mobile-submenu" },
-        h(Link, { href: "/services#legal-services", onClick: closeMenu }, "Legal"),
-        h(Link, { href: "/services#consulting-services", onClick: closeMenu }, "Consulting")
+        h(Link, { href: "/legal", onClick: closeMenu }, "Legal"),
+        h(Link, { href: "/consulting", onClick: closeMenu }, "Consulting")
       )
     ),
     h(Link, { href: "/careers", onClick: closeMenu }, "Careers"),

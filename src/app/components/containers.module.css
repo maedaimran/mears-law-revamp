@@ -1,6 +1,7 @@
 .practiceSection {
   background: #FFFFFF;
   padding: clamp(60px, 8vw, 100px) 0;
+  font-family: var(--font-inter), 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
 }
 
 .practiceContainer {
@@ -83,6 +84,8 @@
   letter-spacing: -0.01em;
   text-decoration: none;
   transition: all 0.3s ease;
+  font-family: inherit;
+  color: #260e69;
 }
 
 .practiceArrowContainer {
